@@ -3,18 +3,15 @@ import { sample } from 'lodash';
 
 // ----------------------------------------------------------------------
 
-const users = [...Array(24)].map((_, index) => ({
+const customers = [...Array(24)].map((_, index) => ({
   id: faker.datatype.uuid(),
   avatarUrl: `/assets/images/avatars/avatar_${index + 1}.jpg`,
   name: faker.name.fullName(),
   company: faker.company.name(),
+  // company: 'High Rock Pest Solutions',
   // isVerified: faker.datatype.boolean(),
-  status: sample(['active', 'banned']),
-  role: sample([
-    'Owner',
-    'Building Manager',
-    // 'UI Designer',
-  ]),
+  status: sample(['Active', 'Archived']),
+  role: sample(['Building Manager','Owner']),
 }));
 
-export default users;
+export default customers;

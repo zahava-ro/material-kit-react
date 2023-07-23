@@ -1,9 +1,9 @@
 // ----------------------------------------------------------------------
 
 const account = {
-  displayName: 'Jaydon Frankie',
-  email: 'demo@minimals.cc',
-  photoURL: '/assets/images/avatars/avatar_default.jpg',
+  displayName: 'Mr Kibel',
+  email: 'mrkibel@highrock.com',
+  photoURL: '/assets/images/avatars/high-rock-logo-transparent.png',
 };
 
 export default account;

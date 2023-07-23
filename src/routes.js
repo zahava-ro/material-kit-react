@@ -2,11 +2,17 @@ import { Navigate, useRoutes } from 'react-router-dom';
 // layouts
 import DashboardLayout from './layouts/dashboard';
 import SimpleLayout from './layouts/simple';
-//
+// pages
 import BlogPage from './pages/BlogPage';
-import UserPage from './pages/UserPage';
+import CustomerPage from './pages/CustomerPage';
+import EmployeesPage from './pages/EmployeesPage';
+import ServicesPage from './pages/ServicesPage';
+import ScrapPage from './pages/ScrapPage';
+import CalendarPage from './pages/CalendarPage';
+// import UserPage from './pages/UserPage';
 import LoginPage from './pages/LoginPage';
 import Page404 from './pages/Page404';
+import InventoryPage from './pages/InventoryPage';
 import ProductsPage from './pages/ProductsPage';
 import DashboardAppPage from './pages/DashboardAppPage';
 
@@ -20,9 +26,13 @@ export default function Router() {
       children: [
         { element: <Navigate to="/dashboard/app" />, index: true },
         { path: 'app', element: <DashboardAppPage /> },
-        { path: 'user', element: <UserPage /> },
+        { path: 'customers', element: <CustomerPage /> },
+        { path: 'inventory', element: <InventoryPage /> },
         { path: 'products', element: <ProductsPage /> },
-        { path: 'blog', element: <BlogPage /> },
+        { path: 'employees', element: <EmployeesPage /> },
+        { path: 'services', element: <ServicesPage /> },
+        { path: 'calendar', element: <CalendarPage /> },
+        { path: 'scrap', element: <ScrapPage /> },
       ],
     },
     {

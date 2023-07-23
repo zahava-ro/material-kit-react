@@ -31,29 +31,46 @@ export default function DashboardAppPage() {
 
       <Container maxWidth="xl">
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Hi, Welcome back
+          High Rock Pest Solutions
         </Typography>
+
+        These are a few of the wigets that came with the React Template. 
+        They all are using fake data right now.
+        We can decide whether we want to use them to make our website look cooler or not.
+        We can also make our own.
 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Weekly Sales" total={714000} icon={'ant-design:android-filled'} />
+            <AppWidgetSummary title="Active Customers" total={271} icon={'ant-design:android-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="New Users" total={1352831} color="info" icon={'ant-design:apple-filled'} />
+            <AppWidgetSummary title="Employees" total={85} color="info" icon={'ant-design:apple-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Item Orders" total={1723315} color="warning" icon={'ant-design:windows-filled'} />
+            <AppWidgetSummary title="Appointments This Week" total={38} color="warning" icon={'ant-design:windows-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Bug Reports" total={234} color="error" icon={'ant-design:bug-filled'} />
+            <AppWidgetSummary title="Unpaid Invoices" total={12} color="error" icon={'ant-design:bug-filled'} />
+          </Grid>
+
+          <Grid item xs={12} md={6} lg={8}>
+            <AppTasks
+              title="Tasks"
+              list={[
+                { id: '1', label: 'Order Chemical X' },
+                { id: '2', label: 'Follow up with Customer #19738 about Mouse Traps' },
+                { id: '3', label: 'Interview New Employee' },
+                { id: '4', label: 'Send invoive to Customer #99877' },
+              ]}
+            />
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>
             <AppWebsiteVisits
-              title="Website Visits"
+              title="Service Calls"
               subheader="(+43%) than last year"
               chartLabels={[
                 '01/01/2003',
@@ -70,19 +87,19 @@ export default function DashboardAppPage() {
               ]}
               chartData={[
                 {
-                  name: 'Team A',
+                  name: 'Mice',
                   type: 'column',
                   fill: 'solid',
                   data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30],
                 },
                 {
-                  name: 'Team B',
+                  name: 'Bees',
                   type: 'area',
                   fill: 'gradient',
                   data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43],
                 },
                 {
-                  name: 'Team C',
+                  name: 'Birds',
                   type: 'line',
                   fill: 'solid',
                   data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39],
@@ -93,12 +110,12 @@ export default function DashboardAppPage() {
 
           <Grid item xs={12} md={6} lg={4}>
             <AppCurrentVisits
-              title="Current Visits"
+              title="Customer Base"
               chartData={[
-                { label: 'America', value: 4344 },
-                { label: 'Asia', value: 5435 },
-                { label: 'Europe', value: 1443 },
-                { label: 'Africa', value: 4443 },
+                { label: 'Inactive', value: 4344 },
+                { label: 'Active', value: 5435 },
+                { label: 'Archived', value: 1443 },
+                { label: 'Prospective', value: 4443 },
               ]}
               chartColors={[
                 theme.palette.primary.main,
@@ -111,24 +128,24 @@ export default function DashboardAppPage() {
 
           <Grid item xs={12} md={6} lg={8}>
             <AppConversionRates
-              title="Conversion Rates"
+              title="Services Offered"
               subheader="(+43%) than last year"
               chartData={[
-                { label: 'Italy', value: 400 },
-                { label: 'Japan', value: 430 },
-                { label: 'China', value: 448 },
-                { label: 'Canada', value: 470 },
-                { label: 'France', value: 540 },
-                { label: 'Germany', value: 580 },
-                { label: 'South Korea', value: 690 },
-                { label: 'Netherlands', value: 1100 },
-                { label: 'United States', value: 1200 },
-                { label: 'United Kingdom', value: 1380 },
+                { label: 'Ladybugs', value: 400 },
+                { label: 'Bedbugs', value: 430 },
+                { label: 'Termites', value: 448 },
+                { label: 'Spiders', value: 470 },
+                { label: 'Rats', value: 540 },
+                { label: 'Squirrels', value: 580 },
+                { label: 'Birds', value: 690 },
+                { label: 'Wasps', value: 1100 },
+                { label: 'Bees', value: 1200 },
+                { label: 'Mice', value: 1380 },
               ]}
             />
           </Grid>
 
-          <Grid item xs={12} md={6} lg={4}>
+          {/* <Grid item xs={12} md={6} lg={4}>
             <AppCurrentSubject
               title="Current Subject"
               chartLabels={['English', 'History', 'Physics', 'Geography', 'Chinese', 'Math']}
@@ -152,9 +169,9 @@ export default function DashboardAppPage() {
                 postedAt: faker.date.recent(),
               }))}
             />
-          </Grid>
+          </Grid> */}
 
-          <Grid item xs={12} md={6} lg={4}>
+          {/* <Grid item xs={12} md={6} lg={4}>
             <AppOrderTimeline
               title="Order Timeline"
               list={[...Array(5)].map((_, index) => ({
@@ -198,20 +215,8 @@ export default function DashboardAppPage() {
                 },
               ]}
             />
-          </Grid>
+          </Grid> */}
 
-          <Grid item xs={12} md={6} lg={8}>
-            <AppTasks
-              title="Tasks"
-              list={[
-                { id: '1', label: 'Create FireStone Logo' },
-                { id: '2', label: 'Add SCSS and JS files if required' },
-                { id: '3', label: 'Stakeholder Meeting' },
-                { id: '4', label: 'Scoping & Estimations' },
-                { id: '5', label: 'Sprint Showcase' },
-              ]}
-            />
-          </Grid>
         </Grid>
       </Container>
     </>

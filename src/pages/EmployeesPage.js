@@ -29,7 +29,7 @@ import Scrollbar from '../components/scrollbar';
 // sections
 import { UserListHead, UserListToolbar } from '../sections/@dashboard/user';
 // mock
-import USERLIST from '../_mock/user';
+import USERLIST from '../_mock/employee';
 
 // ----------------------------------------------------------------------
 
@@ -37,7 +37,7 @@ const TABLE_HEAD = [
   { id: 'name', label: 'Name', alignRight: false },
   { id: 'company', label: 'Company', alignRight: false },
   { id: 'role', label: 'Role', alignRight: false },
-  { id: 'isVerified', label: 'Verified', alignRight: false },
+  { id: 'isLicensed', label: 'Licensed', alignRight: false },
   { id: 'status', label: 'Status', alignRight: false },
   { id: '' },
 ];
@@ -73,7 +73,7 @@ function applySortFilter(array, comparator, query) {
   return stabilizedThis.map((el) => el[0]);
 }
 
-export default function UserPage() {
+export default function EmployeePage() {
   const [open, setOpen] = useState(null);
 
   const [page, setPage] = useState(0);
@@ -149,18 +149,19 @@ export default function UserPage() {
   return (
     <>
       <Helmet>
-        <title> Customers </title>
+        <title> Employees </title>
       </Helmet>
 
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Customers
+            Employees
           </Typography>
           <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
-            New Customer
+            New Employee
           </Button>
         </Stack>
+        This table widget that came with the template is super confusing so we should probably just make our own
 
         <Card>
           <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
@@ -179,7 +180,7 @@ export default function UserPage() {
                 />
                 <TableBody>
                   {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, name, role, status, company, avatarUrl, isVerified } = row;
+                    const { id, name, role, status, company, avatarUrl, isLicensed } = row;
                     const selectedUser = selected.indexOf(name) !== -1;
 
                     return (
@@ -201,10 +202,10 @@ export default function UserPage() {
 
                         <TableCell align="left">{role}</TableCell>
 
-                        <TableCell align="left">{isVerified ? 'Yes' : 'No'}</TableCell>
+                        <TableCell align="left">{isLicensed ? 'Yes' : 'No'}</TableCell>
 
                         <TableCell align="left">
-                          <Label color={(status === 'banned' && 'error') || 'success'}>{sentenceCase(status)}</Label>
+                          <Label color={(status === 'Archived' && 'error') || 'success'}>{sentenceCase(status)}</Label>
                         </TableCell>
 
                         <TableCell align="right">
