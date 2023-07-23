@@ -37,7 +37,7 @@ export default function DashboardAppPage() {
         These are a few of the wigets that came with the React Template. 
         They all are using fake data right now.
         We can decide whether we want to use them to make our website look cooler or not.
-        We can also make our own.
+        We can also make our own wigets to put on this page.
 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>

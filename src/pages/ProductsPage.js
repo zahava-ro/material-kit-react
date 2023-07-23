@@ -28,8 +28,10 @@ export default function ProductsPage() {
 
       <Container>
         <Typography variant="h4" sx={{ mb: 5 }}>
-          Products (layout is from template)
+          Products
         </Typography>
+
+        This page came from the React Template. It looks cool, but idk how practical it is for showing chemicals...
 
         <Stack direction="row" flexWrap="wrap-reverse" alignItems="center" justifyContent="flex-end" sx={{ mb: 5 }}>
           <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>

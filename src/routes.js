@@ -33,6 +33,7 @@ export default function Router() {
         { path: 'services', element: <ServicesPage /> },
         { path: 'calendar', element: <CalendarPage /> },
         { path: 'scrap', element: <ScrapPage /> },
+        { path: 'blog', element: <BlogPage /> },
       ],
     },
     {

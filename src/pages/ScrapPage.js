@@ -26,21 +26,6 @@ import {
 import Label from '../components/label';
 import Iconify from '../components/iconify';
 import Scrollbar from '../components/scrollbar';
-// sections
-import { UserListHead, UserListToolbar } from '../sections/@dashboard/user';
-// mock
-import USERLIST from '../_mock/customer';
-
-// ----------------------------------------------------------------------
-
-const TABLE_HEAD = [
-  { id: 'company', label: 'Company', alignRight: false },
-  { id: 'name', label: 'Name', alignRight: false },
-  { id: 'role', label: 'Role', alignRight: false },
-  { id: 'isVerified', label: 'Verified', alignRight: false },
-  { id: 'status', label: 'Status', alignRight: false },
-  { id: '' },
-];
 
 export default function ScrapPage() {
   const [open, setOpen] = useState(null);
@@ -48,16 +33,16 @@ export default function ScrapPage() {
   return (
     <>
       <Helmet>
-        <title> Customers </title>
+        <title> Scrap Page for Development </title>
       </Helmet>
 
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Customers
+          Scrap Page for Development
           </Typography>
           <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
-            New Customer
+            Button
           </Button>
         </Stack>
       </Container>

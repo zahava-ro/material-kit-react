@@ -1,8 +1,6 @@
 // component
 import SvgColor from '../../../components/svg-color';
 
-// ----------------------------------------------------------------------
-
 const icon = (name) => <SvgColor src={`/assets/icons/navbar/${name}.svg`} sx={{ width: 1, height: 1 }} />;
 
 const navConfig = [
@@ -32,30 +30,37 @@ const navConfig = [
     icon: icon('ic_cart'),
   },
   {
-    title: 'Products',
-    path: '/dashboard/products',
-    icon: icon('ic_cart'),
-  },
-  {
     title: 'Calendar',
     path: '/dashboard/calendar',
     icon: icon('ic_blog'),
   },
   {
-    title: 'Scrap',
+    title: 'Scrap Page',
     path: '/dashboard/scrap',
     icon: icon('ic_blog'),
   },
-  // {
-  //   title: 'login',
-  //   path: '/login',
-  //   icon: icon('ic_lock'),
-  // },
-  // {
-  //   title: 'Not found',
-  //   path: '/404',
-  //   icon: icon('ic_disabled'),
-  // },
+  
+  // extra pages that came with the template
+  {
+    title: 'Products (from template)',
+    path: '/dashboard/products',
+    icon: icon('ic_cart'),
+  },
+  {
+    title: 'Blog (from template)',
+    path: '/dashboard/blog',
+    icon: icon('ic_blog'),
+  },
+  {
+    title: 'login (from template)',
+    path: '/login',
+    icon: icon('ic_lock'),
+  },
+  {
+    title: 'Not found (from template)',
+    path: '/404',
+    icon: icon('ic_disabled'),
+  },
 ];
 
 export default navConfig;
