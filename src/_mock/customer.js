@@ -14,4 +14,23 @@ const customers = [...Array(24)].map((_, index) => ({
   role: sample(['Building Manager','Owner']),
 }));
 
+export const dummyCustomers = [
+  {
+    id: 1,
+    name: 'John Doe',
+    address: '123 Main Street, City, State, Zip',
+    email: 'john.doe@example.com',
+    phone: '555-123-4567',
+    status: 'Active'
+  },
+  {
+    id: 2,
+    name: 'Jane Smith',
+    address: '456 Park Avenue, City, State, Zip',
+    email: 'jane.smith@example.com',
+    phone: '555-987-6543',
+    status: 'Archived'
+  },
+];
+
 export default customers;
