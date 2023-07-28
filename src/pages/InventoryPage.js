@@ -1,9 +1,6 @@
 import { Helmet } from 'react-helmet-async';
-import { useState } from 'react';
 // @mui
-import { Container, Stack, Typography } from '@mui/material';
-// mock
-import PRODUCTS from '../_mock/products';
+import { Container, Typography } from '@mui/material';
 
 export default function InventoryPage() {
 

@@ -52,6 +52,11 @@ const navConfig = [
     icon: icon('ic_blog'),
   },
   {
+    title: 'Users (from template)',
+    path: '/dashboard/users',
+    icon: icon('ic_user'),
+  },
+  {
     title: 'login (from template)',
     path: '/login',
     icon: icon('ic_lock'),

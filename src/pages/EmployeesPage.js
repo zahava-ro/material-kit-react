@@ -1,27 +1,15 @@
 import { Helmet } from 'react-helmet-async';
 import { filter } from 'lodash';
 import { sentenceCase } from 'change-case';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 // @mui
 import {
-  Card,
-  Table,
-  Stack,
-  Paper,
-  Avatar,
   Button,
-  Popover,
-  Checkbox,
-  TableRow,
-  MenuItem,
-  TableBody,
-  TableCell,
   Container,
   Typography,
-  IconButton,
-  TableContainer,
-  TablePagination,
+  Box, TextField
 } from '@mui/material';
+import { DataGrid } from '@mui/x-data-grid';
 // components
 import Label from '../components/label';
 import Iconify from '../components/iconify';
@@ -29,17 +17,26 @@ import Scrollbar from '../components/scrollbar';
 // sections
 import { UserListHead, UserListToolbar } from '../sections/@dashboard/user';
 // mock
-import USERLIST from '../_mock/employee';
+import { dummyEmployees } from '../_mock/employee';
+import AddEmployeeModal from '../components/AddEmployee/AddEmployeeModal';
 
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Name', alignRight: false },
-  { id: 'company', label: 'Company', alignRight: false },
-  { id: 'role', label: 'Role', alignRight: false },
-  { id: 'isLicensed', label: 'Licensed', alignRight: false },
+  { id: 'id', label: 'Employee ID', alignRight: false },
+  { id: 'first_name', label: 'First Name', alignRight: false },
+  { id: 'last_name', label: 'Last Name', alignRight: false },
   { id: 'status', label: 'Status', alignRight: false },
-  { id: '' },
+  { id: 'license_id', label: 'License ID', alignRight: false },
+  { id: 'email', label: 'Email', alignRight: false },
+  { id: 'phone_number', label: 'Phone Number', alignRight: false },
+  { id: 'address_line1', label: 'Address Line 1', alignRight: false },
+  { id: 'address_line2', label: 'Address Line 2', alignRight: false },
+  { id: 'city', label: 'City', alignRight: false },
+  { id: 'state', label: 'State', alignRight: false },
+  { id: 'postal_code', label: 'Postal Code', alignRight: false },
+  { id: 'notes', label: 'Notes', alignRight: false },
+  { id: '', label: '', alignRight: false },
 ];
 
 // ----------------------------------------------------------------------
@@ -74,222 +71,109 @@ function applySortFilter(array, comparator, query) {
 }
 
 export default function EmployeePage() {
-  const [open, setOpen] = useState(null);
+  const [employees, setEmployees] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
 
-  const [page, setPage] = useState(0);
+  useEffect(() => {
+    // Load employee data from the database here and set it to the state
+    // For now, we'll use the dummyEmployees for testing purposes
+    setEmployees(dummyEmployees);
+  }, []);
 
-  const [order, setOrder] = useState('asc');
-
-  const [selected, setSelected] = useState([]);
-
-  const [orderBy, setOrderBy] = useState('name');
-
-  const [filterName, setFilterName] = useState('');
-
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-
-  const handleOpenMenu = (event) => {
-    setOpen(event.currentTarget);
+  const addEmployee = () => {
+    setIsModalOpen(true);
   };
 
-  const handleCloseMenu = () => {
-    setOpen(null);
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
   };
 
-  const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
+  const handleAddEmployee = (newEmployee) => {
+    // Save the newEmployee data to the database and update the employees state
+    setEmployees((prevEmployees) => [...prevEmployees, newEmployee]);
   };
 
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelecteds = USERLIST.map((n) => n.name);
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
+  const handleSearchChange = (event) => {
+    setSearchValue(event.target.value);
   };
 
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected = [];
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
-    }
-    setSelected(newSelected);
-  };
+  const filteredEmployees = employees.filter(
+    (employee) =>
+      employee.first_name.toLowerCase().includes(searchValue.toLowerCase()) ||
+      employee.email.toLowerCase().includes(searchValue.toLowerCase())
+    // Add more conditions here for additional fields you want to search
+  );
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setPage(0);
-    setRowsPerPage(parseInt(event.target.value, 10));
-  };
-
-  const handleFilterByName = (event) => {
-    setPage(0);
-    setFilterName(event.target.value);
-  };
-
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - USERLIST.length) : 0;
-
-  const filteredUsers = applySortFilter(USERLIST, getComparator(order, orderBy), filterName);
-
-  const isNotFound = !filteredUsers.length && !!filterName;
-
+  const columns = [
+    { field: 'id', headerName: 'Employee ID', alignRight: false, width: 150 },
+    { field: 'first_name', headerName: 'First Name', alignRight: false, width: 150 },
+    { field: 'last_name', headerName: 'Last Name', alignRight: false, width: 150 },
+    {
+      field: 'status',
+      headerName: 'Status',
+      alignRight: false,
+      width: 120,
+      renderCell: (params) => (
+        <span style={{ color: params.value === 'Active' ? 'green' : 'red' }}>
+          {params.value}
+        </span>
+      ),
+    },
+    { field: 'license_id', headerName: 'License ID', alignRight: false, width: 150 },
+    { field: 'email', headerName: 'Email', alignRight: false, width: 250 },
+    { field: 'phone_number', headerName: 'Phone Number', alignRight: false, width: 150 },
+    { field: 'address_line1', headerName: 'Address Line 1', alignRight: false, width: 200 },
+    { field: 'address_line2', headerName: 'Address Line 2', alignRight: false, width: 200 },
+    { field: 'city', headerName: 'City', alignRight: false, width: 120 },
+    { field: 'state', headerName: 'State', alignRight: false, width: 120 },
+    { field: 'postal_code', headerName: 'Postal Code', alignRight: false, width: 150 },
+    { field: 'notes', headerName: 'Notes', alignRight: false, width: 300 },
+  ];
+  
   return (
     <>
       <Helmet>
-        <title> Employees </title>
+        <title>Employees</title>
       </Helmet>
 
       <Container>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+        <Box display="flex" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
             Employees
           </Typography>
-          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
-            New Employee
-          </Button>
-        </Stack>
-        This table widget that came with the template is super confusing so we should probably just make our own
+          <Box display="flex" alignItems="center" gap={1}>
+            <TextField
+              label="Search"
+              variant="outlined"
+              value={searchValue}
+              onChange={handleSearchChange}
+              size="small"
+            />
+            <Button 
+              onClick={addEmployee} 
+              variant="contained" 
+              startIcon={<Iconify icon="eva:plus-fill" />}>
+              New Employee
+            </Button>
+          </Box>
+        </Box>
 
-        <Card>
-          <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
-
-          <Scrollbar>
-            <TableContainer sx={{ minWidth: 800 }}>
-              <Table>
-                <UserListHead
-                  order={order}
-                  orderBy={orderBy}
-                  headLabel={TABLE_HEAD}
-                  rowCount={USERLIST.length}
-                  numSelected={selected.length}
-                  onRequestSort={handleRequestSort}
-                  onSelectAllClick={handleSelectAllClick}
-                />
-                <TableBody>
-                  {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, name, role, status, company, avatarUrl, isLicensed } = row;
-                    const selectedUser = selected.indexOf(name) !== -1;
-
-                    return (
-                      <TableRow hover key={id} tabIndex={-1} role="checkbox" selected={selectedUser}>
-                        <TableCell padding="checkbox">
-                          <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, name)} />
-                        </TableCell>
-
-                        <TableCell component="th" scope="row" padding="none">
-                          <Stack direction="row" alignItems="center" spacing={2}>
-                            <Avatar alt={name} src={avatarUrl} />
-                            <Typography variant="subtitle2" noWrap>
-                              {name}
-                            </Typography>
-                          </Stack>
-                        </TableCell>
-
-                        <TableCell align="left">{company}</TableCell>
-
-                        <TableCell align="left">{role}</TableCell>
-
-                        <TableCell align="left">{isLicensed ? 'Yes' : 'No'}</TableCell>
-
-                        <TableCell align="left">
-                          <Label color={(status === 'Archived' && 'error') || 'success'}>{sentenceCase(status)}</Label>
-                        </TableCell>
-
-                        <TableCell align="right">
-                          <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
-                            <Iconify icon={'eva:more-vertical-fill'} />
-                          </IconButton>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-                  {emptyRows > 0 && (
-                    <TableRow style={{ height: 53 * emptyRows }}>
-                      <TableCell colSpan={6} />
-                    </TableRow>
-                  )}
-                </TableBody>
-
-                {isNotFound && (
-                  <TableBody>
-                    <TableRow>
-                      <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
-                        <Paper
-                          sx={{
-                            textAlign: 'center',
-                          }}
-                        >
-                          <Typography variant="h6" paragraph>
-                            Not found
-                          </Typography>
-
-                          <Typography variant="body2">
-                            No results found for &nbsp;
-                            <strong>&quot;{filterName}&quot;</strong>.
-                            <br /> Try checking for typos or using complete words.
-                          </Typography>
-                        </Paper>
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                )}
-              </Table>
-            </TableContainer>
-          </Scrollbar>
-
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={USERLIST.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
+        <div style={{ height: 400, width: '100%' }}>
+          <DataGrid
+            rows={filteredEmployees}
+            columns={columns}
+            pageSize={10}
+            rowsPerPageOptions={[10, 25, 50]}
           />
-        </Card>
+        </div>
       </Container>
 
-      <Popover
-        open={Boolean(open)}
-        anchorEl={open}
-        onClose={handleCloseMenu}
-        anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        PaperProps={{
-          sx: {
-            p: 1,
-            width: 140,
-            '& .MuiMenuItem-root': {
-              px: 1,
-              typography: 'body2',
-              borderRadius: 0.75,
-            },
-          },
-        }}
-      >
-        <MenuItem>
-          <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
-          Edit
-        </MenuItem>
-
-        <MenuItem sx={{ color: 'error.main' }}>
-          <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />
-          Delete
-        </MenuItem>
-      </Popover>
+      <AddEmployeeModal
+        open={isModalOpen}
+        onClose={handleCloseModal}
+        onAddEmployee={handleAddEmployee}
+      />
     </>
   );
 }

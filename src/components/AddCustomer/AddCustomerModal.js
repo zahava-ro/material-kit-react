@@ -5,7 +5,7 @@ const AddCustomerModal = ({ open, onClose, onAddCustomer }) => {
   const [customer, setCustomer] = useState({
     id: Math.random()*10000,
     name: '',
-    address: '',
+    notes: '',
     email: '',
     phone: '',
     status: 'Active'
@@ -44,13 +44,6 @@ const AddCustomerModal = ({ open, onClose, onAddCustomer }) => {
               fullWidth
             />
             <TextField
-              name="address"
-              label="Address"
-              value={customer.address}
-              onChange={handleChange}
-              fullWidth
-            />
-            <TextField
               name="email"
               label="Email"
               value={customer.email}
@@ -61,6 +54,13 @@ const AddCustomerModal = ({ open, onClose, onAddCustomer }) => {
               name="phone"
               label="Phone"
               value={customer.phone}
+              onChange={handleChange}
+              fullWidth
+            />
+            <TextField
+              name="notes"
+              label="Notes"
+              value={customer.address}
               onChange={handleChange}
               fullWidth
             />
