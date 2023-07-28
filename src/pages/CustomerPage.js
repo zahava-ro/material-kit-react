@@ -51,6 +51,7 @@ export default function CustomerPage() {
       field: 'status',
       headerName: 'Status',
       width: 120,
+      editable: true,
       renderCell: (params) => (
         <span style={{ color: params.value === 'Active' ? 'green' : 'red' }}>
           {params.value}
@@ -89,7 +90,7 @@ export default function CustomerPage() {
           </Box>
         </Box>
 
-        <div style={{ height: 400, width: '100%' }}>
+        <div style={{ height: '100%', width: '100%' }}>
           <DataGrid
             rows={filteredCustomers}
             columns={columns}

@@ -1,17 +1,12 @@
 import { Helmet } from 'react-helmet-async';
 import { useState, useEffect } from 'react';
 // @mui
-import {
-  Button,
-  Container,
-  Typography,
-  Box, TextField
-} from '@mui/material';
+import { Button, Container, Typography, Box, TextField } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 // components
 import Iconify from '../components/iconify';
 import AddEmployeeModal from '../components/AddEmployee/AddEmployeeModal';
-// mock
+// mock data
 import { dummyEmployees } from '../_mock/employee';
 
 
@@ -105,7 +100,7 @@ export default function EmployeePage() {
           </Box>
         </Box>
 
-        <div style={{ height: 400, width: '100%' }}>
+        <div style={{ height: '100%', width: '100%' }}>
           <DataGrid
             rows={filteredEmployees}
             columns={columns}

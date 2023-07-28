@@ -1,8 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { sample } from 'lodash';
 
-// ----------------------------------------------------------------------
-
 // const employees = [...Array(24)].map((_, index) => ({
 //   id: faker.datatype.uuid(),
 //   avatarUrl: `/assets/images/avatars/avatar_${index + 1}.jpg`,
@@ -13,8 +11,6 @@ import { sample } from 'lodash';
 //   status: sample(['Active', 'Archived']),
 //   role: sample(['Worker','Manager']),
 // }));
-
-// export default employees;
 
 export const dummyEmployees = [
   {
@@ -62,5 +58,51 @@ export const dummyEmployees = [
     postal_code: '12345',
     notes: 'Experienced exterminator',
   },
+  {
+    id: 4,
+    first_name: 'Emily',
+    last_name: 'Wilson',
+    status: 'Active',
+    license_id: 'EMP004',
+    email: 'emily.wilson@example.com',
+    phone_number: '555-876-5432',
+    address_line1: '567 Oak Lane',
+    address_line2: 'Unit 202',
+    city: 'Townsville',
+    state: 'Stateland',
+    postal_code: '56789',
+    notes: 'Friendly and reliable technician',
+  },
+  {
+    id: 5,
+    first_name: 'Michael',
+    last_name: 'Lee',
+    status: 'Archived',
+    license_id: 'EMP005',
+    email: 'michael.lee@example.com',
+    phone_number: '555-234-5678',
+    address_line1: '901 Pine Street',
+    address_line2: 'Apt 303',
+    city: 'Cityville',
+    state: 'Stateland',
+    postal_code: '12345',
+    notes: 'Retired technician, no longer active',
+  },
+  {
+    id: 6,
+    first_name: 'Sophia',
+    last_name: 'Brown',
+    status: 'Active',
+    license_id: 'EMP006',
+    email: 'sophia.brown@example.com',
+    phone_number: '555-765-4321',
+    address_line1: '234 Cedar Avenue',
+    address_line2: 'Suite 404',
+    city: 'Townsville',
+    state: 'Stateland',
+    postal_code: '56789',
+    notes: 'Specializes in pest identification',
+  },
   // Add more dummy employees here...
 ];
+

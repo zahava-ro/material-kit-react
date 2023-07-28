@@ -9,10 +9,10 @@ import EmployeesPage from './pages/EmployeesPage';
 import ServicesPage from './pages/ServicesPage';
 import ScrapPage from './pages/ScrapPage';
 import CalendarPage from './pages/CalendarPage';
+import MaterialsPage from './pages/MaterialsPage';
 import UserPage from './pages/UserPage';
 import LoginPage from './pages/LoginPage';
 import Page404 from './pages/Page404';
-import InventoryPage from './pages/InventoryPage';
 import ProductsPage from './pages/ProductsPage';
 import DashboardAppPage from './pages/DashboardAppPage';
 
@@ -27,8 +27,8 @@ export default function Router() {
         { element: <Navigate to="/dashboard/app" />, index: true },
         { path: 'app', element: <DashboardAppPage /> },
         { path: 'customers', element: <CustomerPage /> },
-        { path: 'inventory', element: <InventoryPage /> },
         { path: 'products', element: <ProductsPage /> },
+        { path: 'materials', element: <MaterialsPage /> },
         { path: 'employees', element: <EmployeesPage /> },
         { path: 'services', element: <ServicesPage /> },
         { path: 'calendar', element: <CalendarPage /> },

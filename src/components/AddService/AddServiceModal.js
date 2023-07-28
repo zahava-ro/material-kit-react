@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Fade, Typography, TextField, Button, Stack, IconButton, MenuItem, FormControl, Select, InputLabel } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-// import { dummyMaterials } from '../_mock/materials';
 
-const dummyMaterials = [
-    { product_id: 1, product_name: 'Material A' },
-    { product_id: 2, product_name: 'Material B' },
-    { product_id: 3, product_name: 'Material C' },
-    // Add more materials as needed
+const dummyMaterialsLists = [
+    {
+        id: 1,
+        list_name: 'Materials List 1',
+    },
+    {
+        id: 2,
+        list_name: 'Materials List 2',
+    },
+    {
+        id: 3,
+        list_name: 'Materials List 3',
+    },
 ];
+  
 
 const AddServiceModal = ({ open, onClose, onAddService }) => {
   const [service, setService] = useState({
@@ -20,12 +28,12 @@ const AddServiceModal = ({ open, onClose, onAddService }) => {
     notes: '',
   });
 
-  const [materials, setMaterials] = useState([]); // State to hold the materials data
+  const [materialsLists, setMaterialsLists] = useState([]); // State to hold the materials data
 
   useEffect(() => {
     // Fetch the materials data from the database here
-    // For now, we'll use dummyMaterials for testing purposes
-    setMaterials(dummyMaterials);
+    // For now, we'll use dummyMaterialsLists for testing purposes
+    setMaterialsLists(dummyMaterialsLists);
   }, []);
 
   const handleChange = (e) => {
@@ -90,9 +98,9 @@ const AddServiceModal = ({ open, onClose, onAddService }) => {
                 label="Materials List"
                 inputProps={{ id: 'materials-list' }}
               >
-                {materials.map((material) => (
-                  <MenuItem key={material.product_id} value={material.product_id}>
-                    {material.product_name}
+                {materialsLists.map((materialList) => (
+                  <MenuItem key={materialList.id} value={materialList.id}>
+                    {materialList.list_name}
                   </MenuItem>
                 ))}
               </Select>

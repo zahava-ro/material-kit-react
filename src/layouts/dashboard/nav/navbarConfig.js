@@ -25,8 +25,8 @@ const navConfig = [
     icon: icon('ic_cart'),
   },
   {
-    title: 'Inventory',
-    path: '/dashboard/inventory',
+    title: 'Materials',
+    path: '/dashboard/materials',
     icon: icon('ic_cart'),
   },
   {
@@ -34,11 +34,11 @@ const navConfig = [
     path: '/dashboard/calendar',
     icon: icon('ic_blog'),
   },
-  {
-    title: 'Scrap Page',
-    path: '/dashboard/scrap',
-    icon: icon('ic_blog'),
-  },
+  // {
+  //   title: 'Scrap Page',
+  //   path: '/dashboard/scrap',
+  //   icon: icon('ic_blog'),
+  // },
   
   // extra pages that came with the template
   {
