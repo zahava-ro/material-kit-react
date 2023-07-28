@@ -1,6 +1,4 @@
 import { Helmet } from 'react-helmet-async';
-import { filter } from 'lodash';
-import { sentenceCase } from 'change-case';
 import { useState, useEffect } from 'react';
 // @mui
 import {
@@ -11,64 +9,11 @@ import {
 } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 // components
-import Label from '../components/label';
 import Iconify from '../components/iconify';
-import Scrollbar from '../components/scrollbar';
-// sections
-import { UserListHead, UserListToolbar } from '../sections/@dashboard/user';
+import AddEmployeeModal from '../components/AddEmployee/AddEmployeeModal';
 // mock
 import { dummyEmployees } from '../_mock/employee';
-import AddEmployeeModal from '../components/AddEmployee/AddEmployeeModal';
 
-// ----------------------------------------------------------------------
-
-const TABLE_HEAD = [
-  { id: 'id', label: 'Employee ID', alignRight: false },
-  { id: 'first_name', label: 'First Name', alignRight: false },
-  { id: 'last_name', label: 'Last Name', alignRight: false },
-  { id: 'status', label: 'Status', alignRight: false },
-  { id: 'license_id', label: 'License ID', alignRight: false },
-  { id: 'email', label: 'Email', alignRight: false },
-  { id: 'phone_number', label: 'Phone Number', alignRight: false },
-  { id: 'address_line1', label: 'Address Line 1', alignRight: false },
-  { id: 'address_line2', label: 'Address Line 2', alignRight: false },
-  { id: 'city', label: 'City', alignRight: false },
-  { id: 'state', label: 'State', alignRight: false },
-  { id: 'postal_code', label: 'Postal Code', alignRight: false },
-  { id: 'notes', label: 'Notes', alignRight: false },
-  { id: '', label: '', alignRight: false },
-];
-
-// ----------------------------------------------------------------------
-
-function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
-
-function getComparator(order, orderBy) {
-  return order === 'desc'
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-function applySortFilter(array, comparator, query) {
-  const stabilizedThis = array.map((el, index) => [el, index]);
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) return order;
-    return a[1] - b[1];
-  });
-  if (query) {
-    return filter(array, (_user) => _user.name.toLowerCase().indexOf(query.toLowerCase()) !== -1);
-  }
-  return stabilizedThis.map((el) => el[0]);
-}
 
 export default function EmployeePage() {
   const [employees, setEmployees] = useState([]);
@@ -106,7 +51,7 @@ export default function EmployeePage() {
   );
 
   const columns = [
-    { field: 'id', headerName: 'Employee ID', alignRight: false, width: 150 },
+    { field: 'id', headerName: 'ID', alignRight: false },
     { field: 'first_name', headerName: 'First Name', alignRight: false, width: 150 },
     { field: 'last_name', headerName: 'Last Name', alignRight: false, width: 150 },
     {
@@ -114,6 +59,7 @@ export default function EmployeePage() {
       headerName: 'Status',
       alignRight: false,
       width: 120,
+      editable: true,
       renderCell: (params) => (
         <span style={{ color: params.value === 'Active' ? 'green' : 'red' }}>
           {params.value}
