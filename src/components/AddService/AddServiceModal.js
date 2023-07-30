@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Fade, Typography, TextField, Button, Stack, IconButton, MenuItem, FormControl, Select, InputLabel } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+// import { dummyMaterialsLists } from '../_mock/materials'; // Replace this with actual data fetched from the database
 
 const dummyMaterialsLists = [
     {
@@ -16,7 +17,6 @@ const dummyMaterialsLists = [
         list_name: 'Materials List 3',
     },
 ];
-  
 
 const AddServiceModal = ({ open, onClose, onAddService }) => {
   const [service, setService] = useState({

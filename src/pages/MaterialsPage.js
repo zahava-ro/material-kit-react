@@ -4,52 +4,7 @@ import { Container, Typography, Box, TextField, Button } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import Iconify from '../components/iconify';
 import AddMaterialModal from '../components/AddMaterial/AddMaterialModal'; // Assuming you have a modal for adding materials
-// import { dummyMaterials } from '../_mock/material'; // Replace this with actual data fetched from the database
-
-export const dummyMaterials = [
-  {
-    id: 1,
-    product_name: 'Insecticide Spray',
-    use_description: 'Effective against ants, cockroaches, and spiders.',
-    services_list_id: 1,
-    MSDS: 'https://example.com/msds/insecticide_spray.pdf',
-    supplier_id: 101,
-  },
-  {
-    id: 2,
-    product_name: 'Rodent Bait',
-    use_description: 'Used to control mice and rats.',
-    services_list_id: 2,
-    MSDS: 'https://example.com/msds/rodent_bait.pdf',
-    supplier_id: 102,
-  },
-  {
-    id: 3,
-    product_name: 'Termite Treatment',
-    use_description: 'For protecting structures from termite infestations.',
-    services_list_id: 3,
-    MSDS: 'https://example.com/msds/termite_treatment.pdf',
-    supplier_id: 103,
-  },
-  {
-    id: 4,
-    product_name: 'Flea and Tick Powder',
-    use_description: 'Kills fleas and ticks on pets and in the environment.',
-    services_list_id: 4,
-    MSDS: 'https://example.com/msds/flea_tick_powder.pdf',
-    supplier_id: 104,
-  },
-  {
-    id: 5,
-    product_name: 'Weed Killer',
-    use_description: 'Eliminates unwanted weeds and plants.',
-    services_list_id: 5,
-    MSDS: 'https://example.com/msds/weed_killer.pdf',
-    supplier_id: 105,
-  },
-  // Add more materials here as needed
-];
-
+import { dummyMaterials } from '../_mock/materials'; // Replace this with actual data fetched from the database
 
 export default function MaterialPage() {
   const [materials, setMaterials] = useState([]);
@@ -91,7 +46,7 @@ export default function MaterialPage() {
     { field: 'id', headerName: 'ID', alignRight: false, width: 100 },
     { field: 'product_name', headerName: 'Material Name', alignRight: false, width: 200 },
     { field: 'use_description', headerName: 'Use Description', alignRight: false, width: 400 },
-    { field: 'services_list_id', headerName: 'ID of Group of Services', alignRight: false, width: 300 },
+    { field: 'services_list_id', headerName: 'Services List', alignRight: false, width: 150 },
     { field: 'MSDS', headerName: 'MSDS', alignRight: false, width: 300 },
     { field: 'supplier_id', headerName: 'Supplier ID', alignRight: false, width: 200 },
   ];

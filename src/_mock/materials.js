@@ -1,10 +1,3 @@
-// export const dummyMaterials = [
-//     { id: 1, product_name: 'Material A' },
-//     { id: 2, product_name: 'Material B' },
-//     { id: 3, product_name: 'Material C' },
-//     // Add more materials as needed
-// ];
-
 export const dummyMaterials = [
     {
       id: 1,
@@ -48,4 +41,19 @@ export const dummyMaterials = [
     },
     // Add more materials here as needed
   ];
+
+export const dummyMaterialsLists = [
+    {
+        id: 1,
+        list_name: 'Materials List 1',
+    },
+    {
+        id: 2,
+        list_name: 'Materials List 2',
+    },
+    {
+        id: 3,
+        list_name: 'Materials List 3',
+    },
+];
   
