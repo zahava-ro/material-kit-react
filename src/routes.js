@@ -8,7 +8,7 @@ import CustomerPage from './pages/CustomerPage';
 import EmployeesPage from './pages/EmployeesPage';
 import ServicesPage from './pages/ServicesPage';
 import ScrapPage from './pages/ScrapPage';
-import CalendarPage from './pages/CalendarPage';
+import AppointmentsPage from './pages/AppointmentsPage';
 import MaterialsPage from './pages/MaterialsPage';
 import UserPage from './pages/UserPage';
 import LoginPage from './pages/LoginPage';
@@ -31,7 +31,7 @@ export default function Router() {
         { path: 'materials', element: <MaterialsPage /> },
         { path: 'employees', element: <EmployeesPage /> },
         { path: 'services', element: <ServicesPage /> },
-        { path: 'calendar', element: <CalendarPage /> },
+        { path: 'appointments', element: <AppointmentsPage /> },
         { path: 'scrap', element: <ScrapPage /> },
         { path: 'blog', element: <BlogPage /> },
         { path: 'users', element: <UserPage /> },

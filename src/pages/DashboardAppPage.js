@@ -1,13 +1,21 @@
 import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
 // @mui
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
 // components
 import Iconify from '../components/iconify';
+import SvgColor from '../components/svg-color';
 // sections
 import { AppTasks, AppCurrentVisits, AppWebsiteVisits, AppWidgetSummary, AppConversionRates } from '../sections/@dashboard/app';
+import AppointmentsCalendar from '../components/AppointmentsCalendar/AppointmentsCalendar'
+// import logo from '../../public/assets/images/avatars/high-rock-logo-transparent.png';
 
 // ----------------------------------------------------------------------
+const icon = (name) => <SvgColor src={`/assets/icons/navbar/${name}.svg`} sx={{ width: 1, height: 1 }} />;
+const customerCount = 53;
+const employeeCount = 45;
+const scheduledAppointments = 43;
 
 export default function DashboardAppPage() {
   const theme = useTheme();
@@ -19,6 +27,7 @@ export default function DashboardAppPage() {
       </Helmet>
 
       <Container maxWidth="xl">
+        {/* <img src={logo} alt="High Rock Pest Solutions" style={{ maxWidth: '200px', marginBottom: '20px' }} /> */}
         <Typography variant="h4" sx={{ mb: 5 }}>
           High Rock Pest Solutions
         </Typography>
@@ -30,19 +39,38 @@ export default function DashboardAppPage() {
 
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Active Customers" total={271} icon={'ant-design:android-filled'} />
+            <Link to="../customers">
+              <AppWidgetSummary title="Customers" total={customerCount}  icon={'ant-design:android-filled'}  /> {/* icon={icon('ic_user')} */}
+            </Link>
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Employees" total={85} color="info" icon={'ant-design:apple-filled'} />
+            <Link to="../employees">
+              <AppWidgetSummary title="Employees" total={employeeCount} color="info" icon={'ant-design:apple-filled'} />
+            </Link>
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Appointments This Week" total={38} color="warning" icon={'ant-design:windows-filled'} />
+          <Link to="../appointments">
+            <AppWidgetSummary title="Scheduled Appointments" total={scheduledAppointments} color="warning" icon={'ant-design:windows-filled'} />
+          </Link>
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Unpaid Invoices" total={12} color="error" icon={'ant-design:bug-filled'} />
+          <Link to="../materials">
+            <AppWidgetSummary title="Materials Out of Stock" total={2} color="error" icon={'ant-design:bug-filled'} />
+          </Link>
+          </Grid>
+
+          <Grid item xs={16} md={10} lg={20}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+            <Typography variant="h4" gutterBottom sx={{ textAlign: 'center' }}>
+              <br/><br/>
+              Today's Schedule
+              <br/>
+            </Typography>
+            <AppointmentsCalendar defaultView="day" />
+          </div>
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>

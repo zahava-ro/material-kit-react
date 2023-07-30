@@ -1,17 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Modal,
-  Fade,
-  Typography,
-  TextField,
-  Button,
-  Stack,
-  IconButton,
-  MenuItem,
-  Select,
-  FormControl,
-  InputLabel,
-} from '@mui/material';
+import {Modal,Fade,Typography,TextField,Button,Stack,IconButton,MenuItem,Select,FormControl,InputLabel} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
 const dummyServices = [
@@ -90,9 +78,9 @@ const AddMaterialModal = ({ open, onClose, onAddMaterial }) => {
   };
 
   const dummySuppliers = [
-    { id: 1, name: 'Supplier 1' },
-    { id: 2, name: 'Supplier 2' },
-    { id: 3, name: 'Supplier 3' },
+    { id: 1, name: 'EcoGuard Pest Solutions' },
+    { id: 2, name: 'SafeZone Pest Control Supplies' },
+    { id: 3, name: 'PestMaster Pro' },
   ];
 
   return (

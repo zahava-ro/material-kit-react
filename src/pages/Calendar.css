@@ -1,0 +1,79 @@
+/* Custom styles for the calendar */
+.rbc-calendar {
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+  }
+  
+  .rbc-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    padding: 8px;
+    margin-bottom: 16px;
+  }
+  
+  .rbc-toolbar button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .rbc-toolbar button:hover {
+    background-color: #0056b3;
+  }
+  
+  .rbc-today {
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    padding: 4px;
+  }
+  
+  .rbc-header {
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .rbc-day-bg {
+    background-color: #f8f8f8;
+  }
+  
+  .rbc-event {
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    padding: 2px 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .rbc-event:hover {
+    background-color: #0056b3;
+  }
+  
+  .rbc-selected {
+    background-color: #0056b3;
+  }
+  
+  .rbc-agenda-time-cell,
+  .rbc-agenda-date-cell {
+    border: none;
+  }
+  
+  .rbc-agenda-time-cell {
+    font-weight: bold;
+  }
+  
+  .rbc-agenda-event-cell {
+    padding: 8px;
+  }
+  
+  .rbc-agenda-event-content {
+    font-size: 14px;
+  }
+  

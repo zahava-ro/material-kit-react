@@ -2,16 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Container, Typography, Box, TextField, Button } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
 import Iconify from '../components/iconify';
-import AddAppointmentModal from '../components/AddAppointment/AddAppointmentModal'; // Assuming you have a modal for adding appointments
-// import { dummyAppointments } from '../_mock/appointment'; // Replace this with actual data fetched from the database
+import AddAppointmentModal from '../components/AddAppointment/AddAppointmentModal';
+import AppointmentsCalendar from '../components/AppointmentsCalendar/AppointmentsCalendar';
+
+import './Calendar.css'
 
 const dummyAppointments = [
   {
     id: 1,
     customer_id: 1,
     location_id: 101,
-    date_and_time: '2023-07-25 09:00:00',
+    date_and_time: '2023-07-30 09:00:00',
     service_group_id: 201,
     employee_group_id: 301,
     cost: 150.0,
@@ -26,11 +29,11 @@ const dummyAppointments = [
     id: 2,
     customer_id: 2,
     location_id: 102,
-    date_and_time: '2023-07-26 10:30:00',
+    date_and_time: '2023-08-01 10:30:00',
     service_group_id: 202,
     employee_group_id: 302,
     cost: 180.0,
-    completion_status: 'Scheduled',
+    completion_status: 'Completed',
     payment_status: 'Unpaid',
     frequency_in_days: 60,
     followup_appointment: '2023-09-25 10:30:00',
@@ -41,7 +44,7 @@ const dummyAppointments = [
     id: 3,
     customer_id: 3,
     location_id: 103,
-    date_and_time: '2023-07-27 13:45:00',
+    date_and_time: '2023-08-03 21:00:00',
     service_group_id: 203,
     employee_group_id: 303,
     cost: 200.0,
@@ -55,8 +58,7 @@ const dummyAppointments = [
   // Add more dummy appointments here...
 ];
 
-export default function CalendarPage() {
-  
+export default function AppointmentsPage() {
   const [appointments, setAppointments] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
@@ -108,7 +110,7 @@ export default function CalendarPage() {
     { field: 'followup_reason', headerName: 'Follow-up Reason', align: 'center', editable: 'true'  },
     { field: 'notes', headerName: 'Notes', align: 'center', editable: 'true'  },
   ];
-  
+
 
   return (
     <>
@@ -119,7 +121,7 @@ export default function CalendarPage() {
       <Container>
         <Box display="flex" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            Appointments
+            Appointments List
           </Typography>
           <Box display="flex" alignItems="center" gap={1}>
             <TextField
@@ -129,15 +131,12 @@ export default function CalendarPage() {
               onChange={handleSearchChange}
               size="small"
             />
-            <Button
-              onClick={addAppointment}
-              variant="contained"
-              startIcon={<Iconify icon="eva:plus-fill" />}
-            >
+            <Button onClick={addAppointment} variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
               New Appointment
             </Button>
           </Box>
         </Box>
+
 
         <div style={{ height: '100%', width: '100%' }}>
           <DataGrid
@@ -153,6 +152,13 @@ export default function CalendarPage() {
             ]}
           />
         </div>
+
+        <Typography variant="h4" gutterBottom>
+          <br/><br/>
+          Calendar (Week)
+          <br/>
+        </Typography>
+        <AppointmentsCalendar defaultView="week"/>
       </Container>
 
       <AddAppointmentModal

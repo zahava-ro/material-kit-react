@@ -31,7 +31,7 @@ const navConfig = [
   },
   {
     title: 'Calendar',
-    path: '/dashboard/calendar',
+    path: '/dashboard/appointments',
     icon: icon('ic_blog'),
   },
   // {
