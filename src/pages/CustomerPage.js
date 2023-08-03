@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Container, Typography, Button, Box, TextField } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { Helmet } from 'react-helmet-async';
+import { fetchAllFromTable, addToTable } from '../utils/databaseOperations';
 import { dummyCustomers } from '../_mock/customer';
 import AddCustomerModal from '../components/AddCustomer/AddCustomerModal';
 import Iconify from '../components/iconify';
@@ -12,41 +13,34 @@ export default function CustomerPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
 
-  useEffect(() => {
+  useEffect(() => { (async () => {
     // Load customer data from the database here and set it to the state
-    // For now, we'll use the dummyCustomers for testing purposes
-    setCustomers(dummyCustomers);
-  }, []);
+    const dataFromDB = await fetchAllFromTable('customer');
+    setCustomers(dataFromDB);
+  })() }, []);
 
-  const addCustomer = () => {
-    setIsModalOpen(true);
-  };
+  const addCustomer = () => { setIsModalOpen(true) };
+  const handleCloseModal = () => { setIsModalOpen(false) };
+  const handleSearchChange = (event) => { setSearchValue(event.target.value) };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleAddCustomer = (newCustomer) => {
+  const handleAddCustomer = async (newCustomer) => {
     // Save the newCustomer data to the database and update the customers state
+    await addToTable('customer', newCustomer);
     setCustomers((prevCustomers) => [...prevCustomers, newCustomer]);
-  };
-
-  const handleSearchChange = (event) => {
-    setSearchValue(event.target.value);
   };
 
   const filteredCustomers = customers.filter(
     (customer) =>
-      customer.name.toLowerCase().includes(searchValue.toLowerCase()) ||
+      customer.company_name.toLowerCase().includes(searchValue.toLowerCase()) ||
       customer.email.toLowerCase().includes(searchValue.toLowerCase())
     // Add more conditions here for additional fields you want to search
   );
 
   const columns = [
-    { field: 'id', headerName: 'ID', width: 100 },
-    { field: 'name', headerName: 'Company Name', width: 150 },
+    { field: 'customer_id', headerName: 'ID', width: 100 },
+    { field: 'company_name', headerName: 'Company Name', width: 150 },
     { field: 'email', headerName: 'Email', width: 250 },
-    { field: 'phone', headerName: 'Phone', width: 150 },
+    { field: 'phone_number', headerName: 'Phone', width: 150 },
     {
       field: 'status',
       headerName: 'Status',
@@ -96,6 +90,7 @@ export default function CustomerPage() {
             columns={columns}
             pageSize={10}
             rowsPerPageOptions={[10, 25, 50]}
+            getRowId={(row) =>  row.customer_id}
           />
         </div>
       </Container>

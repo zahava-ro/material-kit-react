@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Fade, Typography, TextField, Button, Stack, IconButton, MenuItem, FormControl, Select, InputLabel } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-// import { dummyMaterialsLists } from '../_mock/materials'; // Replace this with actual data fetched from the database
 
 const dummyMaterialsLists = [
     {
@@ -19,16 +18,28 @@ const dummyMaterialsLists = [
 ];
 
 const AddServiceModal = ({ open, onClose, onAddService }) => {
-  const [service, setService] = useState({
-    id: Math.floor(Math.random() * 10000), // Service ID generated based on SQL data model
+
+  useEffect(() => {
+    if (open) {
+      resetState();
+    }
+  }, [open]);
+
+  const initialServiceState = {
+    service_id: Math.floor(Math.random() * 10000), // Service ID generated based on SQL data model
     service_name: '',
     description: '',
     materials_list_id: '',
     cost: '',
     notes: '',
-  });
-
+  };
+  
+  const [service, setService] = useState(initialServiceState);
   const [materialsLists, setMaterialsLists] = useState([]); // State to hold the materials data
+
+  const resetState = () => {
+    setService(initialServiceState);
+  };
 
   useEffect(() => {
     // Fetch the materials data from the database here

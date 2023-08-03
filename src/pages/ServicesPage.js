@@ -3,19 +3,19 @@ import { Helmet } from 'react-helmet-async';
 import { Container, Typography, Box, TextField, Button } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import Iconify from '../components/iconify';
-import AddServiceModal from '../components/AddService/AddServiceModal'; // Assuming you have a modal for adding services
-import { dummyServices } from '../_mock/service'; // Replace this with actual data fetched from the database
+import AddServiceModal from '../components/AddService/AddServiceModal'; 
+import { fetchAllFromTable, addToTable } from '../utils/databaseOperations';
 
 export default function ServicePage() {
   const [services, setServices] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
 
-  useEffect(() => {
-    // Load service data from the database here and set it to the state
-    // For now, we'll use the dummyServices for testing purposes
-    setServices(dummyServices);
-  }, []);
+  useEffect(() => { (async () => {
+    // Load customer data from the database here and set it to the state
+    const dataFromDB = await fetchAllFromTable('service');
+    setServices(dataFromDB);
+  })() }, []);
 
   const addService = () => {
     setIsModalOpen(true);
@@ -25,8 +25,13 @@ export default function ServicePage() {
     setIsModalOpen(false);
   };
 
-  const handleAddService = (newService) => {
+  const handleAddService = async (newService) => {
     // Save the newService data to the database and update the services state
+    try {
+      await addToTable('service', newService);
+    } catch (e) {
+      console.log(e);
+    }
     setServices((prevServices) => [...prevServices, newService]);
   };
 
@@ -43,7 +48,7 @@ export default function ServicePage() {
   );
 
   const columns = [
-    { field: 'id', headerName: 'ID', alignRight: false, width: 100 },
+    { field: 'service_id', headerName: 'ID', alignRight: false, width: 100 },
     { field: 'service_name', headerName: 'Service Name', alignRight: false, width: 200 },
     { field: 'cost', headerName: 'Cost', alignRight: false, width: 100 },
     { field: 'description', headerName: 'Description', alignRight: false, width: 400 },
@@ -86,6 +91,7 @@ export default function ServicePage() {
             columns={columns}
             pageSize={10}
             rowsPerPageOptions={[10, 25, 50]}
+            getRowId={(row) =>  row.service_id}
           />
         </div>
       </Container>

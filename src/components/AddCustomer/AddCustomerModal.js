@@ -1,16 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, Fade, Typography, TextField, Button, Stack, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
 const AddCustomerModal = ({ open, onClose, onAddCustomer }) => {
-  const [customer, setCustomer] = useState({
-    id: Math.floor(Math.random() * 10000), 
-    name: '',
+
+  useEffect(() => {
+    if (open) {
+      resetState();
+    }
+  }, [open]);
+
+  const initialCustomerState = {
+    customer_id: Math.floor(Math.random() * 10000), 
+    company_name: '',
     notes: '',
     email: '',
-    phone: '',
+    phone_number: '',
     status: 'Active',
-  });
+  };
+
+  const [customer, setCustomer] = useState(initialCustomerState);
+
+  const resetState = () => {
+    setCustomer(initialCustomerState);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,9 +58,9 @@ const AddCustomerModal = ({ open, onClose, onAddCustomer }) => {
             </div>
             <Stack spacing={2}>
               <TextField
-                name="name"
+                name="company_name"
                 label="Name"
-                value={customer.name}
+                value={customer.company_name}
                 onChange={handleChange}
                 fullWidth
                 size="small"
@@ -61,9 +74,9 @@ const AddCustomerModal = ({ open, onClose, onAddCustomer }) => {
                 size="small"
               />
               <TextField
-                name="phone"
+                name="phone_number"
                 label="Phone"
-                value={customer.phone}
+                value={customer.phone_number}
                 onChange={handleChange}
                 fullWidth
                 size="small"
@@ -71,7 +84,7 @@ const AddCustomerModal = ({ open, onClose, onAddCustomer }) => {
               <TextField
                 name="notes"
                 label="Notes"
-                value={customer.address}
+                value={customer.notes}
                 onChange={handleChange}
                 fullWidth
                 size="small"

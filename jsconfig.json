@@ -6,7 +6,7 @@
   },
   "include": [
     "src/**/*"
-  ],
+, "server/server.js", "server/SQLServerConnection.js", "src/index.js"  ],
   "exclude": [
     "node_modules"
   ]

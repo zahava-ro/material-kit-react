@@ -4,70 +4,70 @@ import { Container, Typography, Box, TextField, Button } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import Iconify from '../components/iconify';
+import { fetchAllFromTable, addToTable } from '../utils/databaseOperations';
 import AddAppointmentModal from '../components/AddAppointment/AddAppointmentModal';
 import AppointmentsCalendar from '../components/AppointmentsCalendar/AppointmentsCalendar';
-
 import './Calendar.css'
 
-const dummyAppointments = [
-  {
-    id: 1,
-    customer_id: 1,
-    location_id: 101,
-    date_and_time: '2023-07-30 09:00:00',
-    service_group_id: 201,
-    employee_group_id: 301,
-    cost: 150.0,
-    completion_status: 'Completed',
-    payment_status: 'Paid',
-    frequency_in_days: 30,
-    followup_appointment: '2023-08-25 09:00:00',
-    followup_reason: 'Regular checkup',
-    notes: 'Performed pest control service at customer location.',
-  },
-  {
-    id: 2,
-    customer_id: 2,
-    location_id: 102,
-    date_and_time: '2023-08-01 10:30:00',
-    service_group_id: 202,
-    employee_group_id: 302,
-    cost: 180.0,
-    completion_status: 'Completed',
-    payment_status: 'Unpaid',
-    frequency_in_days: 60,
-    followup_appointment: '2023-09-25 10:30:00',
-    followup_reason: 'Special treatment required',
-    notes: 'Upcoming appointment for pest inspection.',
-  },
-  {
-    id: 3,
-    customer_id: 3,
-    location_id: 103,
-    date_and_time: '2023-08-03 21:00:00',
-    service_group_id: 203,
-    employee_group_id: 303,
-    cost: 200.0,
-    completion_status: 'In Progress',
-    payment_status: 'Unpaid',
-    frequency_in_days: 90,
-    followup_appointment: '2023-10-25 13:45:00',
-    followup_reason: 'Large-scale pest treatment',
-    notes: 'Ongoing pest eradication service.',
-  },
-  // Add more dummy appointments here...
-];
+// const dummyAppointments = [
+//   {
+//     id: 1,
+//     customer_id: 1,
+//     location_id: 101,
+//     date_and_time: '2023-07-30 09:00:00',
+//     service_group_id: 201,
+//     employee_group_id: 301,
+//     cost: 150.0,
+//     completion_status: 'Completed',
+//     payment_status: 'Paid',
+//     frequency_in_days: 30,
+//     followup_appointment: '2023-08-25 09:00:00',
+//     followup_reason: 'Regular checkup',
+//     notes: 'Performed pest control service at customer location.',
+//   },
+//   {
+//     id: 2,
+//     customer_id: 2,
+//     location_id: 102,
+//     date_and_time: '2023-08-01 10:30:00',
+//     service_group_id: 202,
+//     employee_group_id: 302,
+//     cost: 180.0,
+//     completion_status: 'Completed',
+//     payment_status: 'Unpaid',
+//     frequency_in_days: 60,
+//     followup_appointment: '2023-09-25 10:30:00',
+//     followup_reason: 'Special treatment required',
+//     notes: 'Upcoming appointment for pest inspection.',
+//   },
+//   {
+//     id: 3,
+//     customer_id: 3,
+//     location_id: 103,
+//     date_and_time: '2023-08-03 21:00:00',
+//     service_group_id: 203,
+//     employee_group_id: 303,
+//     cost: 200.0,
+//     completion_status: 'In Progress',
+//     payment_status: 'Unpaid',
+//     frequency_in_days: 90,
+//     followup_appointment: '2023-10-25 13:45:00',
+//     followup_reason: 'Large-scale pest treatment',
+//     notes: 'Ongoing pest eradication service.',
+//   },
+//   // Add more dummy appointments here...
+// ];
 
 export default function AppointmentsPage() {
   const [appointments, setAppointments] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
 
-  useEffect(() => {
-    // Load appointment data from the database here and set it to the state
-    // For now, we'll use the dummyAppointments for testing purposes
-    setAppointments(dummyAppointments);
-  }, []);
+  useEffect(() => { (async () => {
+    // Load data from the database here and set it to the state
+    const dataFromDB = await fetchAllFromTable('appointment');
+    setAppointments(dataFromDB);
+  })() }, []);
 
   const addAppointment = () => {
     setIsModalOpen(true);
@@ -77,9 +77,15 @@ export default function AppointmentsPage() {
     setIsModalOpen(false);
   };
 
-  const handleAddAppointment = (newAppointment) => {
+  const handleAddAppointment = async (newAppointment) => {
     // Save the newAppointment data to the database and update the appointments state
-    setAppointments((prevAppointments) => [...prevAppointments, newAppointment]);
+    const modifiedAppointment = { ...newAppointment };
+    modifiedAppointment.employee_group_id = newAppointment.employee_group_id[0] || 1;
+    modifiedAppointment.service_group_id = newAppointment.service_group_id[0] || 1;
+    modifiedAppointment.date_and_time = new Date(modifiedAppointment.date_and_time).toISOString().slice(0, 19).replace('T', ' ');
+    modifiedAppointment.followup_appointment = new Date(modifiedAppointment.followup_appointment).toISOString().slice(0, 19).replace('T', ' ');
+    await addToTable('appointment', modifiedAppointment);
+    setAppointments((prevAppointments) => [...prevAppointments, modifiedAppointment]);
   };
 
   const handleSearchChange = (event) => {
@@ -96,10 +102,10 @@ export default function AppointmentsPage() {
   );
 
   const columns = [
-    { field: 'id', headerName: 'ID', align: 'center' },
+    { field: 'appointment_id', headerName: 'ID', align: 'center' },
     { field: 'customer_id', headerName: 'Customer ID', align: 'center' },
     { field: 'location_id', headerName: 'Location ID', align: 'center' },
-    { field: 'date_and_time', headerName: 'Date and Time', align: 'center', sortComparator: (v1, v2, row1, row2) => new Date(v1).getTime() - new Date(v2).getTime(), },
+    { field: 'date_and_time', headerName: 'Date and Time', align: 'center', sortComparator: (v1, v2) => new Date(v1).getTime() - new Date(v2).getTime(), },
     { field: 'service_group_id', headerName: 'Services Needed', align: 'center' },
     { field: 'employee_group_id', headerName: 'Employees Needed', align: 'center' },
     { field: 'cost', headerName: 'Cost', align: 'center', editable: 'true'  },
@@ -114,15 +120,11 @@ export default function AppointmentsPage() {
 
   return (
     <>
-      <Helmet>
-        <title>Appointments</title>
-      </Helmet>
+      <Helmet><title>Appointments</title></Helmet>
 
       <Container>
         <Box display="flex" alignItems="center" justifyContent="space-between" mb={5}>
-          <Typography variant="h4" gutterBottom>
-            Appointments List
-          </Typography>
+          <Typography variant="h4" gutterBottom>Appointments List</Typography>
           <Box display="flex" alignItems="center" gap={1}>
             <TextField
               label="Search"
@@ -137,13 +139,13 @@ export default function AppointmentsPage() {
           </Box>
         </Box>
 
-
         <div style={{ height: '100%', width: '100%' }}>
           <DataGrid
             rows={filteredAppointments}
             columns={columns}
             pageSize={10}
             rowsPerPageOptions={[10, 25, 50]}
+            getRowId={(row) =>  row.appointment_id}
             sortModel={[
               {
                 field: 'date_and_time',
@@ -153,11 +155,7 @@ export default function AppointmentsPage() {
           />
         </div>
 
-        <Typography variant="h4" gutterBottom>
-          <br/><br/>
-          Calendar (Week)
-          <br/>
-        </Typography>
+        <Typography variant="h4" gutterBottom><br/><br/>Calendar<br/></Typography>
         <AppointmentsCalendar defaultView="week"/>
       </Container>
 

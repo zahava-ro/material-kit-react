@@ -41,31 +41,31 @@ const navConfig = [
   // },
   
   // extra pages that came with the template
-  {
-    title: 'Products (from template)',
-    path: '/dashboard/products',
-    icon: icon('ic_cart'),
-  },
-  {
-    title: 'Blog (from template)',
-    path: '/dashboard/blog',
-    icon: icon('ic_blog'),
-  },
-  {
-    title: 'Users (from template)',
-    path: '/dashboard/users',
-    icon: icon('ic_user'),
-  },
-  {
-    title: 'login (from template)',
-    path: '/login',
-    icon: icon('ic_lock'),
-  },
-  {
-    title: 'Not found (from template)',
-    path: '/404',
-    icon: icon('ic_disabled'),
-  },
+  // {
+  //   title: 'Products (from template)',
+  //   path: '/dashboard/products',
+  //   icon: icon('ic_cart'),
+  // },
+  // {
+  //   title: 'Blog (from template)',
+  //   path: '/dashboard/blog',
+  //   icon: icon('ic_blog'),
+  // },
+  // {
+  //   title: 'Users (from template)',
+  //   path: '/dashboard/users',
+  //   icon: icon('ic_user'),
+  // },
+  // {
+  //   title: 'login (from template)',
+  //   path: '/login',
+  //   icon: icon('ic_lock'),
+  // },
+  // {
+  //   title: 'Not found (from template)',
+  //   path: '/404',
+  //   icon: icon('ic_disabled'),
+  // },
 ];
 
 export default navConfig;

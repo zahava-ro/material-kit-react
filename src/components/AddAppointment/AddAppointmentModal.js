@@ -1,161 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Modal,
-  Fade,
-  Typography,
-  TextField,
-  Button,
-  Stack,
-  IconButton,
-  MenuItem,
-  FormControl,
-  Select,
-  InputLabel,
-} from '@mui/material';
+import { Modal,Fade,Typography,TextField,Button,Stack,IconButton,MenuItem,FormControl,Select,InputLabel} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-// import {dummyCustomers} from '.../_mock/customer';
-
-const dummyCustomers = [
-    {
-      id: 1,
-      name: 'ABC Corp',
-      notes: 'Located at 123 Main Street, City, State, Zip',
-      email: 'contact@abccorp.com',
-      phone: '555-123-4567',
-      status: 'Active',
-    },
-    {
-      id: 2,
-      name: 'XYZ School',
-      notes: 'Located at 456 Park Avenue, City, State, Zip',
-      email: 'info@xyzschool.org',
-      phone: '555-987-6543',
-      status: 'Active',
-    },
-    {
-      id: 3,
-      name: 'City Library',
-      notes: 'Located at 789 Elm Road, City, State, Zip',
-      email: 'library@citylibrary.org',
-      phone: '555-456-7890',
-      status: 'Archived',
-    },
-    {
-      id: 4,
-      name: 'Green Gardens Inc',
-      notes: 'Located at 567 Oak Lane, City, State, Zip',
-      email: 'info@greengardens.com',
-      phone: '555-876-5432',
-      status: 'Active',
-    },
-    {
-      id: 5,
-      name: 'Sal Industries',
-      notes: 'Located at 901 Pine Street, City, State, Zip',
-      email: 'contact@pestfreeindustries.com',
-      phone: '555-234-5678',
-      status: 'Active',
-    },
-    {
-      id: 6,
-      name: 'Tech Solutions Ltd',
-      notes: 'Located at 234 Cedar Avenue, City, State, Zip',
-      email: 'info@techsolutions.com',
-      phone: '555-765-4321',
-      status: 'Active',
-    },
-    {
-      id: 7,
-      name: 'Acme Corp',
-      notes: 'Located at 345 Maple Drive, City, State, Zip',
-      email: 'contact@acmecorp.com',
-      phone: '555-678-9012',
-      status: 'Archived',
-    },
-    {
-      id: 8,
-      name: 'Global Inc',
-      notes: 'Located at 678 Birch Street, City, State, Zip',
-      email: 'info@globalinc.com',
-      phone: '555-890-1234',
-      status: 'Active',
-    },
-    {
-      id: 9,
-      name: 'City Hospital',
-      notes: 'Located at 789 Pine Avenue, City, State, Zip',
-      email: 'info@cityhospital.org',
-      phone: '555-432-5678',
-      status: 'Active',
-    },
-    {
-      id: 10,
-      name: 'Golden Resorts',
-      notes: 'Located at 123 Elm Road, City, State, Zip',
-      email: 'info@goldenresorts.com',
-      phone: '555-876-5432',
-      status: 'Active',
-    },
-  ];
-  
-// const dummyMaterialsLists = [
-//   {
-//     id: 1,
-//     list_name: 'Materials List 1',
-//   },
-//   {
-//     id: 2,
-//     list_name: 'Materials List 2',
-//   },
-//   {
-//     id: 3,
-//     list_name: 'Materials List 3',
-//   },
-// ];
-
-const dummyServices = [
-    {
-      id: 1,
-      service_name: 'Ant Extermination',
-      description: 'Exterminate ants in and around the property',
-      materials_list_id: 1, // Assuming this corresponds to a specific materials list for ant extermination
-      cost: 100.0,
-      notes: 'Ant extermination service for residential properties',
-    },
-    {
-      id: 2,
-      service_name: 'Termite Inspection',
-      description: 'Thorough inspection for termite presence and damage',
-      materials_list_id: 2, // Assuming this corresponds to a specific materials list for termite inspection
-      cost: 150.0,
-      notes: 'Termite inspection service for commercial properties',
-    },
-    {
-      id: 3,
-      service_name: 'Rodent Control',
-      description: 'Control and removal of rodents from the property',
-      materials_list_id: 3, // Assuming this corresponds to a specific materials list for rodent control
-      cost: 120.0,
-      notes: 'Rodent control service for both residential and commercial properties',
-    },
-    {
-      id: 4,
-      service_name: 'Bed Bug Treatment',
-      description: 'Elimination of bed bugs from infested areas',
-      materials_list_id: 4, // Assuming this corresponds to a specific materials list for bed bug treatment
-      cost: 180.0,
-      notes: 'Effective bed bug treatment service',
-    },
-    {
-      id: 5,
-      service_name: 'Mosquito Control',
-      description: 'Mosquito eradication and prevention services',
-      materials_list_id: 5, // Assuming this corresponds to a specific materials list for mosquito control
-      cost: 90.0,
-      notes: 'Mosquito control service to protect outdoor spaces',
-    },
-    // Add more services here as needed
-  ];
+import { fetchAllFromTable } from '../../utils/databaseOperations';
 
 const dummyEmployees = [
     {
@@ -291,23 +137,44 @@ const dummyLocations = [
     // Add more dummy locations here...
   ];
   
-
 const AddAppointmentModal = ({ open, onClose, onAddAppointment }) => {
-  const [appointment, setAppointment] = useState({
-    id: Math.floor(Math.random() * 10000), // Appointment ID generated based on SQL data model
-    customer_id: '',
-    location_id: '',
+
+  useEffect(() => {
+    if (open) {
+      resetState();
+    }
+  }, [open]);
+
+  useEffect(() => { (async () => {
+    const customerOptions = await fetchAllFromTable('customer');
+    setCustomerDropdownOptions(customerOptions);
+    const serviceOptions = await fetchAllFromTable('service');
+    setServicesSelectOptions(serviceOptions);
+  })() }, []);
+
+  const initialAppointmentState = {
+    appointment_id: Math.floor(Math.random() * 10000), // Appointment ID generated 
+    customer_id: 0,
+    location_id: 0,
     date_and_time: '',
     service_group_id: [],
     employee_group_id: [],
-    cost: '',
+    cost: 0,
     completion_status: '',
     payment_status: '',
-    frequency_in_days: '',
+    frequency_in_days: 0,
     followup_appointment: '',
     followup_reason: '',
     notes: '',
-  });
+  };
+
+  const [appointment, setAppointment] = useState(initialAppointmentState);
+  const [customerDropdownOptions, setCustomerDropdownOptions] = useState([]);
+  const [servicesSelectOptions, setServicesSelectOptions] = useState([]);
+
+  const resetState = () => {
+    setAppointment(initialAppointmentState);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -363,10 +230,9 @@ const AddAppointmentModal = ({ open, onClose, onAddAppointment }) => {
                     label="Customer"
                     inputProps={{ id: 'customer-id' }}
                 >
-                    {/* Replace 'dummyCustomers' with the actual data for customers */}
-                    {dummyCustomers.map((customer) => (
-                    <MenuItem key={customer.id} value={customer.id}>
-                        {customer.name}
+                    {customerDropdownOptions.map((customer) => (
+                    <MenuItem key={customer.customer_id} value={customer.customer_id}>
+                        {customer.company_name}
                     </MenuItem>
                     ))}
                 </Select>
@@ -418,9 +284,8 @@ const AddAppointmentModal = ({ open, onClose, onAddAppointment }) => {
                 multiple
                 inputProps={{ id: 'service-group-id' }}
               >
-                {/* Replace 'dummyServices' with the actual data for services */}
-                {dummyServices.map((service) => (
-                  <MenuItem key={service.id} value={service.id}>
+                {servicesSelectOptions.map((service) => (
+                  <MenuItem key={service.service_id} value={service.service_id}>
                     {service.service_name}
                   </MenuItem>
                 ))}
