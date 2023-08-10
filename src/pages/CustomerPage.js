@@ -31,38 +31,31 @@ export default function CustomerPage() {
 
   const filteredCustomers = customers.filter(
     (customer) =>
-      customer.company_name.toLowerCase().includes(searchValue.toLowerCase()) ||
-      customer.email.toLowerCase().includes(searchValue.toLowerCase())
+      (customer.company_name?.toLowerCase() ?? '').includes(searchValue.toLowerCase()) ||
+      (customer.email?.toLowerCase() ?? '').includes(searchValue.toLowerCase()) ||
+      (customer.status?.toLowerCase() ?? '').includes(searchValue.toLowerCase()) ||
+      (customer.phone_number?.toLowerCase() ?? '').includes(searchValue.toLowerCase()) ||
+      (customer.notes?.toLowerCase() ?? '').includes(searchValue.toLowerCase())
     // Add more conditions here for additional fields you want to search
-  );
+  );  
 
   const columns = [
-    { field: 'customer_id', headerName: 'ID', width: 100 },
+    // { field: 'customer_id', headerName: 'ID', width: 100 },
     { field: 'company_name', headerName: 'Company Name', width: 150 },
-    { field: 'email', headerName: 'Email', width: 250 },
+    { field: 'email', headerName: 'Email', width: 150 },
     { field: 'phone_number', headerName: 'Phone', width: 150 },
-    {
-      field: 'status',
-      headerName: 'Status',
-      width: 120,
-      editable: true,
-      renderCell: (params) => (
-        <span style={{ color: params.value === 'Active' ? 'green' : 'red' }}>
-          {params.value}
-        </span>
-      ),
+    {field: 'status',headerName: 'Status',width: 120,editable: true,renderCell: (params) => 
+      (<span style={{ color: params.value === 'Active' ? 'green' : 'red' }}>{params.value}</span>),
     },
-    { field: 'notes', headerName: 'Notes', width: 300 },
+    { field: 'notes', headerName: 'Notes', width: 400 },
     // Add more fields here as needed
   ];
 
   return (
     <>
-      <Helmet>
-        <title>Customers</title>
-      </Helmet>
+      <Helmet><title> High Rock Customers </title></Helmet>
 
-      <Container>
+      <Container maxWidth="xl" style={{ width: '100%', minWidth: '100%', maxWidth: '100%' }}>
         <Box display="flex" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
             Customers

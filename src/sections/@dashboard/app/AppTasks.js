@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 // form
 import { useForm, Controller } from 'react-hook-form';
 // @mui
@@ -16,6 +16,7 @@ import {
 } from '@mui/material';
 // components
 import Iconify from '../../../components/iconify';
+import { fetchAllFromTable } from '../../../utils/databaseOperations';
 
 // ----------------------------------------------------------------------
 
@@ -26,9 +27,26 @@ AppTasks.propTypes = {
 };
 
 export default function AppTasks({ title, subheader, list, ...other }) {
+
+  const [tasks, setTasks] = useState([]);
+  const [completedTasks, setCompletedTasks] = useState([]);
+
+  useEffect(() => { (async () => {
+    // Load customer data from the database here and set it to the state
+    const dataFromDB = await fetchAllFromTable('tasks');
+    setTasks(dataFromDB);
+
+    const completedTasksIds = dataFromDB
+    .filter((task) => task.date_completed !== null)
+    .map((task) => String(task.item_number));
+
+    setCompletedTasks(completedTasksIds)
+    console.log(completedTasks)
+  })() }, []);
+
   const { control } = useForm({
     defaultValues: {
-      taskCompleted: ['2'],
+      taskCompleted: completedTasks,
     },
   });
 

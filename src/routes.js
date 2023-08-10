@@ -11,6 +11,7 @@ import ScrapPage from './pages/ScrapPage';
 import AppointmentsPage from './pages/AppointmentsPage';
 import MaterialsPage from './pages/MaterialsPage';
 import UserPage from './pages/UserPage';
+import TasksPage from './pages/TasksPage';
 import LoginPage from './pages/LoginPage';
 import Page404 from './pages/Page404';
 import ProductsPage from './pages/ProductsPage';
@@ -35,6 +36,7 @@ export default function Router() {
         { path: 'scrap', element: <ScrapPage /> },
         { path: 'blog', element: <BlogPage /> },
         { path: 'users', element: <UserPage /> },
+        { path: 'tasks', element: <TasksPage /> },
       ],
     },
     {

@@ -148,12 +148,12 @@ const AddMaterialModal = ({ open, onClose, onAddMaterial }) => {
               <InputLabel htmlFor="supplier_id">Supplier</InputLabel>
               <Select
                 name="supplier_id"
-                value={material.supplier_id}
+                value={material.name} // should really be id
                 onChange={handleChange}
                 inputProps={{ id: 'supplier_id' }}
               >
                 {dummySuppliers.map((supplier) => (
-                  <MenuItem key={supplier.id} value={supplier.id}>
+                  <MenuItem key={supplier.name} value={supplier.name}>
                     {supplier.name}
                   </MenuItem>
                 ))}

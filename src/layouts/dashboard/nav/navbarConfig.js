@@ -34,6 +34,11 @@ const navConfig = [
     path: '/dashboard/appointments',
     icon: icon('ic_blog'),
   },
+  {
+    title: 'Tasks',
+    path: '/dashboard/tasks',
+    icon: icon('ic_blog'),
+  },
   // {
   //   title: 'Scrap Page',
   //   path: '/dashboard/scrap',

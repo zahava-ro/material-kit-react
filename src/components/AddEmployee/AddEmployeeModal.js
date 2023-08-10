@@ -46,9 +46,7 @@ const AddEmployeeModal = ({ open, onClose, onAddEmployee }) => {
       <Fade in={open}>
         <div style={{ backgroundColor: 'white', padding: 20, borderRadius: 8, maxWidth: 800 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <Typography variant="h5" gutterBottom>
-              Add Employee
-            </Typography>
+            <Typography variant="h5" gutterBottom>Add Employee</Typography>
             <IconButton onClick={onClose} size="small">
               <CloseIcon />
             </IconButton>

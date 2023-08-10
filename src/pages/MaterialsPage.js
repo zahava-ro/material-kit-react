@@ -36,28 +36,27 @@ export default function MaterialPage() {
 
   const filteredMaterials = materials.filter(
     (material) =>
-      material.product_name.toLowerCase().includes(searchValue.toLowerCase()) ||
-      material.use_description.toLowerCase().includes(searchValue.toLowerCase()) ||
-      material.MSDS.toLowerCase().includes(searchValue.toLowerCase())
+      (material.product_name?.toLowerCase() ?? '').includes(searchValue.toLowerCase()) ||
+      (material.use_description?.toLowerCase() ?? '').includes(searchValue.toLowerCase()) ||
+      (material.MSDS?.toLowerCase() ?? '').includes(searchValue.toLowerCase())
     // Add more conditions here for additional fields you want to search
   );
+  
 
   const columns = [
-    { field: 'id', headerName: 'ID', alignRight: false, width: 100 },
+    // { field: 'id', headerName: 'ID', alignRight: false, width: 100 },
     { field: 'product_name', headerName: 'Material Name', alignRight: false, width: 200 },
     { field: 'use_description', headerName: 'Use Description', alignRight: false, width: 400 },
-    { field: 'services_list_id', headerName: 'Services List', alignRight: false, width: 150 },
-    { field: 'MSDS', headerName: 'MSDS', alignRight: false, width: 300 },
-    { field: 'supplier_id', headerName: 'Supplier ID', alignRight: false, width: 200 },
+    { field: 'MSDS', headerName: 'MSDS', alignRight: false, width: 100 },
+    { field: 'supplier_id', headerName: 'Supplier', alignRight: false, width: 250 },
+    { field: 'services_list_id', headerName: 'Services that use this material', alignRight: false, width: 250 },
   ];
 
   return (
     <>
-      <Helmet>
-        <title>Materials</title>
-      </Helmet>
+      <Helmet><title> High Rock Materials </title></Helmet>
 
-      <Container>
+      <Container maxWidth="xl" style={{ width: '100%', minWidth: '100%', maxWidth: '100%' }}>
         <Box display="flex" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
             Materials

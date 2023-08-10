@@ -5,7 +5,8 @@ export const dummyMaterials = [
       use_description: 'Effective against ants, cockroaches, and spiders.',
       services_list_id: 1,
       MSDS: 'https://example.com/msds/insecticide_spray.pdf',
-      supplier_id: 101,
+      // supplier_id: 101,
+      supplier_id: 'EcoGuard Pest Solutions',
     },
     {
       id: 2,
@@ -13,7 +14,8 @@ export const dummyMaterials = [
       use_description: 'Used to control mice and rats.',
       services_list_id: 2,
       MSDS: 'https://example.com/msds/rodent_bait.pdf',
-      supplier_id: 102,
+      // supplier_id: 102,
+      supplier_id: 'SafeZone Pest Control Supplies',
     },
     {
       id: 3,
@@ -21,7 +23,8 @@ export const dummyMaterials = [
       use_description: 'For protecting structures from termite infestations.',
       services_list_id: 3,
       MSDS: 'https://example.com/msds/termite_treatment.pdf',
-      supplier_id: 103,
+      // supplier_id: 103,
+      supplier_id: "EcoGuard Pest Solutions",
     },
     {
       id: 4,
@@ -29,15 +32,8 @@ export const dummyMaterials = [
       use_description: 'Kills fleas and ticks on pets and in the environment.',
       services_list_id: 4,
       MSDS: 'https://example.com/msds/flea_tick_powder.pdf',
-      supplier_id: 104,
-    },
-    {
-      id: 5,
-      product_name: 'Weed Killer',
-      use_description: 'Eliminates unwanted weeds and plants.',
-      services_list_id: 5,
-      MSDS: 'https://example.com/msds/weed_killer.pdf',
-      supplier_id: 105,
+      // supplier_id: 104,
+      supplier_id: 'PestMaster Pro',
     },
     // Add more materials here as needed
   ];

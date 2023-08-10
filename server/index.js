@@ -114,7 +114,7 @@ app.post('/insert-service', function (req, res) {
 
 // Get all appointments from the database
 app.get('/appointment', function (req, res) {
-  let query = "SELECT * from appointment";
+  let query = "SELECT * from appointment ORDER BY date_and_time ASC";
   sql.query(connectionString, query, (err, rows) => {
     if (err) {
       console.error('Error fetching appointments:', err);
@@ -127,6 +127,11 @@ app.get('/appointment', function (req, res) {
 
 // Add an appointment to the database
 app.post('/insert-appointment', function (req, res) {
+
+  let followupDate = req.body.followup_appointment;
+  if (followupDate !== null) {
+    followupDate = `'${followupDate}'`
+  }
   let query = `INSERT INTO [dbo].[appointment]
 			([appointment_id]
 			,[customer_id]
@@ -152,7 +157,7 @@ app.post('/insert-appointment', function (req, res) {
 			,'${req.body.completion_status}'
 			,'${req.body.payment_status}'
 			,${req.body.frequency_in_days}
-			,'${req.body.followup_appointment}'
+			,${followupDate}
 			,'${req.body.followup_reason}'
 			,'${req.body.notes}')
   `;
@@ -166,7 +171,62 @@ app.post('/insert-appointment', function (req, res) {
   });
 });
 
+// Get all tasks from the database
+app.get('/tasks', function (req, res) {
+  let query = "SELECT * from tasks ORDER BY CASE WHEN [date_completed] IS NULL THEN 0 ELSE 1 END;";
+  sql.query(connectionString, query, (err, rows) => {
+    if (err) {
+      console.error('Error fetching tasks:', err);
+      res.status(500).json({ error: 'Error fetching tasks' });
+    } else {
+      res.json(rows);
+    }
+  });
+});
+
+// Get all pest_control_employees from the database
+app.get('/pest_control_employees', function (req, res) {
+  let query = "SELECT * from pest_control_employees";
+  sql.query(connectionString, query, (err, rows) => {
+    if (err) {
+      console.error('Error fetching pest_control_employees:', err);
+      res.status(500).json({ error: 'Error fetching pest_control_employees' });
+    } else {
+      res.json(rows);
+    }
+  });
+});
+
 //-----------NEED TO EDIT QUERYS FROM HERE ON-------------
+
+// Add pest_control_employees to the database
+app.post('/insert-pest_control_employees', function (req, res) {
+	let query = `INSERT INTO [dbo].[pest_control_employees]
+		([employee_id]
+		,[first_name]
+		,[last_name]
+		,[position]
+		,[phone_number]
+		,[email]
+		,[notes])
+	  VALUES
+	  (${req.body.employee_id}
+		,'${req.body.first_name}'
+		,'${req.body.last_name}'
+		,'${req.body.position}'
+		,'${req.body.phone_number}'
+		,'${req.body.email}'
+		,'${req.body.notes}')
+	`;
+	sql.query(connectionString, query, (err) => {
+	  if (err) {
+		console.error('Error adding pest_control_employees:', err);
+		res.status(500).json({ error: 'Error adding pest_control_employees' });
+	  } else {
+		res.json({"code":"pest_control_employees added"});
+	  }
+	});
+  });
 
 // Get all materials from the database
 app.get('/materials', function (req, res) {
@@ -207,48 +267,6 @@ app.post('/insert-materials', function (req, res) {
     }
   });
 });
-
-// Get all pest_control_employees from the database
-app.get('/pest_control_employees', function (req, res) {
-  let query = "SELECT * from pest_control_employees";
-  sql.query(connectionString, query, (err, rows) => {
-    if (err) {
-      console.error('Error fetching pest_control_employees:', err);
-      res.status(500).json({ error: 'Error fetching pest_control_employees' });
-    } else {
-      res.json(rows);
-    }
-  });
-});
-
-// Add pest_control_employees to the database
-app.post('/insert-pest_control_employees', function (req, res) {
-	let query = `INSERT INTO [dbo].[pest_control_employees]
-		([employee_id]
-		,[first_name]
-		,[last_name]
-		,[position]
-		,[phone_number]
-		,[email]
-		,[notes])
-	  VALUES
-	  (${req.body.employee_id}
-		,'${req.body.first_name}'
-		,'${req.body.last_name}'
-		,'${req.body.position}'
-		,'${req.body.phone_number}'
-		,'${req.body.email}'
-		,'${req.body.notes}')
-	`;
-	sql.query(connectionString, query, (err) => {
-	  if (err) {
-		console.error('Error adding pest_control_employees:', err);
-		res.status(500).json({ error: 'Error adding pest_control_employees' });
-	  } else {
-		res.json({"code":"pest_control_employees added"});
-	  }
-	});
-  });
   
   app.listen(5000, function () { console.log('Server is listening at port 5000...');});
   

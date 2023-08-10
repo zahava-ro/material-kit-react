@@ -41,28 +41,26 @@ export default function ServicePage() {
 
   const filteredServices = services.filter(
     (service) =>
-      service.service_name.toLowerCase().includes(searchValue.toLowerCase()) ||
-      service.description.toLowerCase().includes(searchValue.toLowerCase()) ||
-      service.notes.toLowerCase().includes(searchValue.toLowerCase())
+      (service.service_name?.toLowerCase() ?? '').includes(searchValue.toLowerCase()) ||
+      (service.description?.toLowerCase() ?? '').includes(searchValue.toLowerCase()) ||
+      (service.notes?.toLowerCase() ?? '').includes(searchValue.toLowerCase())
     // Add more conditions here for additional fields you want to search
-  );
+  );  
 
   const columns = [
-    { field: 'service_id', headerName: 'ID', alignRight: false, width: 100 },
+    // { field: 'service_id', headerName: 'ID', alignRight: false, width: 100 },
     { field: 'service_name', headerName: 'Service Name', alignRight: false, width: 200 },
     { field: 'cost', headerName: 'Cost', alignRight: false, width: 100 },
     { field: 'description', headerName: 'Description', alignRight: false, width: 400 },
     { field: 'notes', headerName: 'Notes', alignRight: false, width: 400 },
-    { field: 'materials_list_id', headerName: 'ID of Group of Materials Needed', alignRight: false, width: 300 },
+    { field: 'materials_list_id', headerName: 'Materials Needed', alignRight: false, width: 300 },
   ];
 
   return (
     <>
-      <Helmet>
-        <title>Services</title>
-      </Helmet>
+      <Helmet><title> High Rock Services </title></Helmet>
 
-      <Container>
+      <Container maxWidth="xl" style={{ width: '100%', minWidth: '100%', maxWidth: '100%' }}>
         <Box display="flex" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
             Services

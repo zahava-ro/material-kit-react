@@ -8,7 +8,7 @@
 export const fetchAllFromTable = async (tableName) => {
     const response = await fetch(`http://localhost:5000/${tableName}`);
     if (!response.ok) {
-    throw new Error('Failed to fetch data from the server');
+    throw new Error(`Failed to fetch data from the server (table:${tableName})`);
     }
     const data = await response.json();
     return data;
