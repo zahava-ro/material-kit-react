@@ -1,3 +1,5 @@
+// Tasks Page
+// src\pages\TasksPage.js
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Container, Typography, Box, TextField, Button } from '@mui/material';
@@ -5,7 +7,6 @@ import { DataGrid } from '@mui/x-data-grid';
 import Iconify from '../components/iconify';
 import AddTaskModal from '../components/AddTask/AddTaskModal';
 import { fetchAllFromTable, addToTable } from '../utils/databaseOperations';
-import { AppTasks } from '../sections/@dashboard/app';
 
 export default function TasksPage() {
   const [tasks, setTasks] = useState([]);

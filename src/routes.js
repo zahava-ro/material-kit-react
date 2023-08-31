@@ -1,3 +1,5 @@
+// page router
+// src\routes.js
 import { Navigate, useRoutes } from 'react-router-dom';
 // layouts
 import DashboardLayout from './layouts/dashboard';

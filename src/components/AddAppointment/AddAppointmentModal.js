@@ -1,47 +1,9 @@
+// Add Appointmnet Modal (appears when "New Appointmnet" button is clicked)
+// src\components\AddAppointment\AddAppointmentModal.js
 import React, { useState, useEffect } from 'react';
 import { Modal,Fade,Typography,TextField,Button,Stack,IconButton,MenuItem,FormControl,Select,InputLabel} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { fetchAllFromTable } from '../../utils/databaseOperations';
-
-const dummyLocations = [
-    {
-      location_id: 1,
-      customer_id: 1,
-      address_line1: '123 Main Street',
-      address_line2: 'Apt 456',
-      state: 'Stateland',
-      city: 'Cityville',
-      postal_code: '12345',
-      primary_contact: 'John Doe',
-      secondary_contact: 'Jane Smith',
-      notes: 'Headquarters',
-    },
-    {
-      location_id: 2,
-      customer_id: 2,
-      address_line1: '456 Park Avenue',
-      address_line2: 'Suite 789',
-      state: 'Stateland',
-      city: 'Townsville',
-      postal_code: '56789',
-      primary_contact: 'Jane Smith',
-      secondary_contact: 'John Doe',
-      notes: 'Branch Office',
-    },
-    {
-      location_id: 3,
-      customer_id: 1,
-      address_line1: '789 Elm Road',
-      address_line2: 'Unit 101',
-      state: 'Stateland',
-      city: 'Cityville',
-      postal_code: '12345',
-      primary_contact: 'Robert Johnson',
-      secondary_contact: 'Emily Wilson',
-      notes: 'Warehouse',
-    },
-    // Add more dummy locations here...
-  ];
   
 const AddAppointmentModal = ({ open, onClose, onAddAppointment }) => {
 
@@ -65,6 +27,7 @@ const AddAppointmentModal = ({ open, onClose, onAddAppointment }) => {
   const [customerDropdownOptions, setCustomerDropdownOptions] = useState([]);
   const [servicesSelectOptions, setServicesSelectOptions] = useState([]);
   const [employees, setEmployees] = useState([]);
+  const [locations, setLocations] = useState([]);
 
   useEffect(() => {
     if (open) {
@@ -79,6 +42,8 @@ const AddAppointmentModal = ({ open, onClose, onAddAppointment }) => {
     setServicesSelectOptions(serviceOptions);
     const employeeOptions = await fetchAllFromTable('pest_control_employees');
     setEmployees(employeeOptions);
+    const locationOptions = await fetchAllFromTable('location');
+    setLocations(locationOptions);
   })() }, []);
 
 
@@ -154,8 +119,7 @@ const AddAppointmentModal = ({ open, onClose, onAddAppointment }) => {
                 label="Location"
                 inputProps={{ id: 'location-id' }}
               >
-                {/* Replace 'dummyLocations' with the actual data for locations */}
-                {dummyLocations.map((location) => (
+                {locations.map((location) => (
                   <MenuItem key={location.location_id} value={location.location_id}>
                     {`${location.address_line1} - ${location.notes}`}
                   </MenuItem>

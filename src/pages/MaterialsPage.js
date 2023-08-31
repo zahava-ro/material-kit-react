@@ -1,21 +1,22 @@
+// Materials Page
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Container, Typography, Box, TextField, Button } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import Iconify from '../components/iconify';
-import AddMaterialModal from '../components/AddMaterial/AddMaterialModal'; // Assuming you have a modal for adding materials
-import { dummyMaterials } from '../_mock/materials'; // Replace this with actual data fetched from the database
+import AddMaterialModal from '../components/AddMaterial/AddMaterialModal';
+import { fetchAllFromTable } from '../utils/databaseOperations';
 
 export default function MaterialPage() {
   const [materials, setMaterials] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
 
-  useEffect(() => {
+  useEffect(() => { (async () => {
     // Load material data from the database here and set it to the state
-    // For now, we'll use the dummyMaterials for testing purposes
-    setMaterials(dummyMaterials);
-  }, []);
+    const dataFromDB = await fetchAllFromTable('materials');
+    setMaterials(dataFromDB);
+  })() }, []);
 
   const addMaterial = () => {
     setIsModalOpen(true);
@@ -42,7 +43,6 @@ export default function MaterialPage() {
     // Add more conditions here for additional fields you want to search
   );
   
-
   const columns = [
     // { field: 'id', headerName: 'ID', alignRight: false, width: 100 },
     { field: 'product_name', headerName: 'Material Name', alignRight: false, width: 200 },
@@ -85,6 +85,7 @@ export default function MaterialPage() {
             columns={columns}
             pageSize={10}
             rowsPerPageOptions={[10, 25, 50]}
+            getRowId={(row) =>  row.product_id}
           />
         </div>
       </Container>

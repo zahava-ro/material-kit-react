@@ -3,7 +3,6 @@ import { Helmet } from 'react-helmet-async';
 import { Container, Typography, Box, TextField, Button } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import moment from 'moment';
 import Iconify from '../components/iconify';
 import { fetchAllFromTable, addToTable } from '../utils/databaseOperations';
 import AddAppointmentModal from '../components/AddAppointment/AddAppointmentModal';
@@ -14,10 +13,9 @@ export default function AppointmentsPage() {
   const [appointments, setAppointments] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
-  // const localizer = momentLocalizer(moment);
 
   useEffect(() => { (async () => {
-    // Load data from the database here and set it to the state
+    // Load data from the database and set it to the state
     const dataFromDB = await fetchAllFromTable('appointment');
     setAppointments(dataFromDB);
   })() }, []);
@@ -41,6 +39,7 @@ export default function AppointmentsPage() {
     return serviceGroupID
   };
 
+  // when an appointment is about to be added to the database, we need to make sure its in the proper format
   const handleAddAppointment = async (newAppointment) => {
     const modifiedAppointment = { ...newAppointment };
     modifiedAppointment.employee_group_id = createEmployeeGroup(newAppointment.employee_group_id);

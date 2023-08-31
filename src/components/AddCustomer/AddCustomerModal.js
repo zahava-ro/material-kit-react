@@ -1,3 +1,5 @@
+// Add Customer Modal (appears when “New Customer” button is clicked)
+// src\components\AddCustomer\AddCustomerModal.js
 import React, { useState, useEffect } from 'react';
 import { Modal, Fade, Typography, TextField, Button, Stack, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';

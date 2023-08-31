@@ -1,3 +1,4 @@
+// Services Page
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Container, Typography, Box, TextField, Button } from '@mui/material';
@@ -12,7 +13,7 @@ export default function ServicePage() {
   const [searchValue, setSearchValue] = useState('');
 
   useEffect(() => { (async () => {
-    // Load customer data from the database here and set it to the state
+    // Load services data from the database here and set it to the state
     const dataFromDB = await fetchAllFromTable('service');
     setServices(dataFromDB);
   })() }, []);
@@ -27,11 +28,8 @@ export default function ServicePage() {
 
   const handleAddService = async (newService) => {
     // Save the newService data to the database and update the services state
-    try {
-      await addToTable('service', newService);
-    } catch (e) {
-      console.log(e);
-    }
+    try { await addToTable('service', newService);
+    } catch (e) { console.log(e) }
     setServices((prevServices) => [...prevServices, newService]);
   };
 

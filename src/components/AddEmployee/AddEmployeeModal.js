@@ -1,3 +1,5 @@
+// Add Employee Modal (appears when "New Employee" button is clicked)
+// src\components\AddEmployee\AddEmployeeModal.js
 import React, { useState } from 'react';
 import { Modal, Fade, Typography, TextField, Button, Stack, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';

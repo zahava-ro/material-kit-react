@@ -1,28 +1,5 @@
-// // Get all customers from the database
-// app.get('/customer', function (req, res) {
-// 	let query = "SELECT * from customer";
-// 	sql.query(connectionString, query, (err, rows) => { res.json(rows) }); // send the response to the browser as json
-// });
-
-// // Add a service to the database
-// app.post('/insert-customer', function (req, res) {
-// 	let query = `INSERT INTO [dbo].[customer]
-// 				([customer_id]
-// 				,[company_name]
-// 				,[status]
-// 				,[email]
-// 				,[phone_number]
-// 				,[notes])
-// 			VALUES
-// 				(${req.body.customer_id}
-// 				,'${req.body.company_name}'
-// 				,'${req.body.status}'
-// 				,'${req.body.email}'
-// 				,'${req.body.phone_number}'
-// 				,'${req.body.notes}')
-// 	`;
-// 	sql.query(connectionString, query, (err) => { res.json({"code":"customer added"}) });
-// });
+// Node.js express server
+// server\index.js
 const express = require('express');
 const app = express();
 const sql = require("msnodesqlv8");
@@ -267,6 +244,33 @@ app.post('/insert-materials', function (req, res) {
     }
   });
 });
+
+// Get all suppliers from the database
+app.get('/supplier', function (req, res) {
+  let query = "SELECT * from supplier";
+  sql.query(connectionString, query, (err, rows) => {
+    if (err) {
+      console.error('Error fetching suppliers:', err);
+      res.status(500).json({ error: 'Error fetching suppliers' });
+    } else {
+      res.json(rows);
+    }
+  });
+});
+
+// Get all locations from the database
+app.get('/location', function (req, res) {
+  let query = "SELECT * from location";
+  sql.query(connectionString, query, (err, rows) => {
+    if (err) {
+      console.error('Error fetching locations:', err);
+      res.status(500).json({ error: 'Error fetching locations' });
+    } else {
+      res.json(rows);
+    }
+  });
+});
+
+/* more endpoints to fetch/add locations, materials, contacts, suppliers, service groups, employee groups, */
   
-  app.listen(5000, function () { console.log('Server is listening at port 5000...');});
-  
+app.listen(5000, function () { console.log('Server is listening at port 5000...');});

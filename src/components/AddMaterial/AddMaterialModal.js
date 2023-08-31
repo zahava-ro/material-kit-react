@@ -1,60 +1,29 @@
-import React, { useState } from 'react';
+// Add Material Modal
+import React, { useState, useEffect } from 'react';
 import {Modal,Fade,Typography,TextField,Button,Stack,IconButton,MenuItem,Select,FormControl,InputLabel} from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-
-const dummyServices = [
-  {
-    id: 1,
-    service_name: 'Ant Extermination',
-    description: 'Exterminate ants in and around the property',
-    materials_list_id: 1, // Assuming this corresponds to a specific materials list for ant extermination
-    cost: 100.0,
-    notes: 'Ant extermination service for residential properties',
-  },
-  {
-    id: 2,
-    service_name: 'Termite Inspection',
-    description: 'Thorough inspection for termite presence and damage',
-    materials_list_id: 2, // Assuming this corresponds to a specific materials list for termite inspection
-    cost: 150.0,
-    notes: 'Termite inspection service for commercial properties',
-  },
-  {
-    id: 3,
-    service_name: 'Rodent Control',
-    description: 'Control and removal of rodents from the property',
-    materials_list_id: 3, // Assuming this corresponds to a specific materials list for rodent control
-    cost: 120.0,
-    notes: 'Rodent control service for both residential and commercial properties',
-  },
-  {
-    id: 4,
-    service_name: 'Bed Bug Treatment',
-    description: 'Elimination of bed bugs from infested areas',
-    materials_list_id: 4, // Assuming this corresponds to a specific materials list for bed bug treatment
-    cost: 180.0,
-    notes: 'Effective bed bug treatment service',
-  },
-  {
-    id: 5,
-    service_name: 'Mosquito Control',
-    description: 'Mosquito eradication and prevention services',
-    materials_list_id: 5, // Assuming this corresponds to a specific materials list for mosquito control
-    cost: 90.0,
-    notes: 'Mosquito control service to protect outdoor spaces',
-  },
-  // Add more services here as needed
-];
+import { fetchAllFromTable } from '../../utils/databaseOperations';
 
 const AddMaterialModal = ({ open, onClose, onAddMaterial }) => {
   const [material, setMaterial] = useState({
     id: Math.floor(Math.random() * 10000),
     product_name: '',
     use_description: '',
-    services_list_id: [], // Initialize as an empty array
+    services_list_id: [],
     MSDS: null,
     supplier_id: '',
   });
+
+  const [services, setServices] = useState([]);
+  const [suppliers, setSuppliers] = useState([]);
+
+  useEffect(() => { (async () => {
+    // Load services and supplier data from the database here and set it to the state
+    let dataFromDB = await fetchAllFromTable('service');
+    setServices(dataFromDB);
+    dataFromDB = await fetchAllFromTable('supplier');
+    setSuppliers(dataFromDB);
+  })() }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -76,12 +45,6 @@ const AddMaterialModal = ({ open, onClose, onAddMaterial }) => {
     onAddMaterial(material);
     onClose();
   };
-
-  const dummySuppliers = [
-    { id: 1, name: 'EcoGuard Pest Solutions' },
-    { id: 2, name: 'SafeZone Pest Control Supplies' },
-    { id: 3, name: 'PestMaster Pro' },
-  ];
 
   return (
     <Modal
@@ -132,8 +95,8 @@ const AddMaterialModal = ({ open, onClose, onAddMaterial }) => {
                 onChange={handleChange}
                 inputProps={{ id: 'services_list_id' }}
               >
-                {dummyServices.map((service) => (
-                  <MenuItem key={service.id} value={service.id}>
+                {services.map((service) => (
+                  <MenuItem key={service.service_id} value={service.service_id}>
                     {service.service_name}
                   </MenuItem>
                 ))}
@@ -152,7 +115,7 @@ const AddMaterialModal = ({ open, onClose, onAddMaterial }) => {
                 onChange={handleChange}
                 inputProps={{ id: 'supplier_id' }}
               >
-                {dummySuppliers.map((supplier) => (
+                {suppliers.map((supplier) => (
                   <MenuItem key={supplier.name} value={supplier.name}>
                     {supplier.name}
                   </MenuItem>

@@ -1,10 +1,10 @@
+// Customers Page
 // src/pages/CustomerPage.js
 import { useState, useEffect } from 'react';
 import { Container, Typography, Button, Box, TextField } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { Helmet } from 'react-helmet-async';
 import { fetchAllFromTable, addToTable } from '../utils/databaseOperations';
-import { dummyCustomers } from '../_mock/customer';
 import AddCustomerModal from '../components/AddCustomer/AddCustomerModal';
 import Iconify from '../components/iconify';
 
@@ -48,7 +48,6 @@ export default function CustomerPage() {
       (<span style={{ color: params.value === 'Active' ? 'green' : 'red' }}>{params.value}</span>),
     },
     { field: 'notes', headerName: 'Notes', width: 400 },
-    // Add more fields here as needed
   ];
 
   return (

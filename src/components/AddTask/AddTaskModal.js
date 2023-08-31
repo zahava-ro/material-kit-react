@@ -1,3 +1,5 @@
+// Add Task Modal (appears when "New Task" button is clicked)
+// src\components\AddTask\AddTaskModal.js
 import React, { useState, useEffect } from 'react';
 import { Modal, Fade, Typography, TextField, Button, Stack, IconButton, MenuItem, FormControl, Select, InputLabel } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
@@ -27,16 +29,14 @@ const AddTaskModal = ({ open, onClose, onAddTask }) => {
   const [employees, setEmployees] = useState([]);
 
   useEffect(() => {
-    // Fetch employees data from the database here
-    // For now, we'll use dummyEmployees for testing purposes
+    const fetchEmployees = async () => {
+        const employeesData = await fetchAllFromTable('pest_control_employees');
+        setEmployees(employeesData);
+      };
     fetchEmployees();
   }, []);
 
-  const fetchEmployees = async () => {
-    const employeesData = await fetchAllFromTable('pest_control_employees');
-    setEmployees(employeesData);
-  };
-
+  // reset the fields to be empty on modal open
   const resetState = () => {
     setTask(initialTaskState);
   };
@@ -113,14 +113,6 @@ const AddTaskModal = ({ open, onClose, onAddTask }) => {
                 renderInput={(params) => <TextField {...params} fullWidth size="small" />}
               />
             </LocalizationProvider>
-            {/* <TextField
-              name="employee_id"
-              label="Employee ID"
-              value={task.employee_id}
-              onChange={handleChange}
-              fullWidth
-              size="small"
-            /> */}
             <TextField
               name="type_of_activity"
               label="Type of Activity"

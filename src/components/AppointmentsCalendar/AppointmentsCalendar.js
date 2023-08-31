@@ -1,3 +1,5 @@
+// Calendar Component (shown on Calendar page and Dashboard page)
+// rc\components\AppointmentsCalendar\AppointmentsCalendar.js
 import React, { useState, useEffect } from 'react';
 import { Container } from '@mui/material';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
@@ -14,17 +16,14 @@ const AppointmentsCalendar = ({ defaultView }) => {
     (async () => {
       // Load data from the database here and set it to the state
       const dataFromDB = await fetchAllFromTable('appointment');
-  
       // Generate calendar events using the fetched appointments
       const calendarEvents = await setCalendarEvents(dataFromDB);
       setEvents(calendarEvents);
     })();
   }, []);
-  
 
   // Create events array of appointments and followup appointments to be shown on the calendar
   const setCalendarEvents = async (appointmentsData) => {
-    
     const events = await appointmentsData.flatMap((appointment) => {
       if (appointment.completion_status !== 'Cancelled') {
         return [
@@ -44,7 +43,6 @@ const AppointmentsCalendar = ({ defaultView }) => {
       }
       return [];
     });
-  
     return events;
   };
     

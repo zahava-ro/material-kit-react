@@ -1,3 +1,5 @@
+// Dashboard Page (Home Page)
+// src\pages\DashboardAppPage.js
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import {useState, useEffect} from 'react';
